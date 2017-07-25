@@ -1,0 +1,11 @@
+c:\users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\bin\Debug\TestProject.exe.config
+c:\users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\bin\Debug\TestProject.exe
+c:\users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\bin\Debug\TestProject.pdb
+c:\users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\obj\Debug\TestProject.csprojResolveAssemblyReference.cache
+c:\users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\obj\Debug\TestProject.Form1.resources
+c:\users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\obj\Debug\TestProject.Properties.Resources.resources
+c:\users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\obj\Debug\TestProject.csproj.GenerateResource.Cache
+c:\users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\obj\Debug\TestProject.exe
+c:\users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\obj\Debug\TestProject.pdb
+C:\Users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\obj\Debug\TestProject.Account.resources
+C:\Users\yjsub\documents\visual studio 2013\Projects\TestProject\TestProject\obj\Debug\TestProject.newAccount.resources
