@@ -86,5 +86,15 @@ namespace TestProject
             {
             }
         }
+
+        private void 품목관리ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TabPage newPage = new TabPage("품목 관리    ");
+
+            newPage.Controls.Add(new product());
+            newPage.Controls[0].Show();
+            tabControl1.TabPages.Add(newPage);
+            tabControl1.SelectedTab = newPage;
+        }
     }
 }

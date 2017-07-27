@@ -63,6 +63,18 @@
     <Compile Include="newAccount.Designer.cs">
       <DependentUpon>newAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="newProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="newProduct.Designer.cs">
+      <DependentUpon>newProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="product.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="product.Designer.cs">
+      <DependentUpon>product.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Account.resx">
@@ -73,6 +85,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="newAccount.resx">
       <DependentUpon>newAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="newProduct.resx">
+      <DependentUpon>newProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="product.resx">
+      <DependentUpon>product.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

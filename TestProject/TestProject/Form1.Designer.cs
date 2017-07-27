@@ -47,33 +47,35 @@
             this.납품지시서ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1749, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1530, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // 거래처관리ToolStripMenuItem
             // 
             this.거래처관리ToolStripMenuItem.Name = "거래처관리ToolStripMenuItem";
-            this.거래처관리ToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
+            this.거래처관리ToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.거래처관리ToolStripMenuItem.Text = "거래처 관리";
             this.거래처관리ToolStripMenuItem.Click += new System.EventHandler(this.거래처관리ToolStripMenuItem_Click);
             // 
             // 품목관리ToolStripMenuItem
             // 
             this.품목관리ToolStripMenuItem.Name = "품목관리ToolStripMenuItem";
-            this.품목관리ToolStripMenuItem.Size = new System.Drawing.Size(86, 24);
+            this.품목관리ToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.품목관리ToolStripMenuItem.Text = "품목 관리";
+            this.품목관리ToolStripMenuItem.Click += new System.EventHandler(this.품목관리ToolStripMenuItem_Click);
             // 
             // 견적서등록ToolStripMenuItem
             // 
             this.견적서등록ToolStripMenuItem.Name = "견적서등록ToolStripMenuItem";
-            this.견적서등록ToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
+            this.견적서등록ToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.견적서등록ToolStripMenuItem.Text = "견적서 등록";
             // 
             // 납품지시서ToolStripMenuItem
             // 
             this.납품지시서ToolStripMenuItem.Name = "납품지시서ToolStripMenuItem";
-            this.납품지시서ToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
+            this.납품지시서ToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.납품지시서ToolStripMenuItem.Text = "납품지시서";
             // 
             // tabControl1
@@ -82,22 +84,24 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabControl1.Location = new System.Drawing.Point(12, 31);
+            this.tabControl1.Location = new System.Drawing.Point(10, 25);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1725, 753);
+            this.tabControl1.Size = new System.Drawing.Size(1509, 602);
             this.tabControl1.TabIndex = 1;
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabcontrol1_DrawItem);
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_MouseClick);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1749, 796);
+            this.ClientSize = new System.Drawing.Size(1530, 637);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
