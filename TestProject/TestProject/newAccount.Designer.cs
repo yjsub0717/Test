@@ -131,6 +131,7 @@
             this.button1.TabIndex = 7;
             this.button1.Text = "확 인";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 

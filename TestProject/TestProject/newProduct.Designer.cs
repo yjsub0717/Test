@@ -238,6 +238,7 @@
             this.textBox8.Size = new System.Drawing.Size(148, 29);
             this.textBox8.TabIndex = 24;
             this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox8.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
             // 
             // label8
             // 
@@ -339,6 +340,7 @@
             this.textBox12.TabIndex = 27;
             this.textBox12.Text = "0";
             this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox12.TextChanged += new System.EventHandler(this.textBox12_TextChanged);
             // 
             // label13
             // 

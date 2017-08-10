@@ -71,6 +71,7 @@
             this.견적서등록ToolStripMenuItem.Name = "견적서등록ToolStripMenuItem";
             this.견적서등록ToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.견적서등록ToolStripMenuItem.Text = "견적서 등록";
+            this.견적서등록ToolStripMenuItem.Click += new System.EventHandler(this.견적서등록ToolStripMenuItem_Click);
             // 
             // 납품지시서ToolStripMenuItem
             // 

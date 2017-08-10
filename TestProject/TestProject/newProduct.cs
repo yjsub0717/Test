@@ -49,6 +49,26 @@ namespace TestProject
             }
             catch (Exception ee)
             {
+              
+            }
+        }
+        private void origin_price_Calculate()
+        {
+            int discountRate = 0;
+            try
+            {
+                if (Int32.TryParse(textBox8.Text, out school_price))
+                {
+                    if (Int32.TryParse(textBox12.Text, out discountRate))
+                    {
+                        origin_price = (int)(school_price * ((100 - discountRate) / 100.0));
+
+                        textBox11.Text = origin_price.ToString();
+                    }
+                }
+            }
+            catch (Exception ee)
+            {
 
             }
         }
@@ -56,6 +76,17 @@ namespace TestProject
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
             price_Calculate();
+        }
+
+        private void textBox12_TextChanged(object sender, EventArgs e)
+        {
+            origin_price_Calculate();
+        }
+
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+            price_Calculate();
+            origin_price_Calculate();
         }
     }
 }

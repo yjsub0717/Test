@@ -32,19 +32,26 @@ namespace TestProject
 
         private void tabControl1_MouseClick(object sender, EventArgs e)
         {
-            TabControl tc = (TabControl)sender;
-            MouseEventArgs ee = (MouseEventArgs)e;
-            Point p = ee.Location;
-            int _tabWidth = 0;
-            _tabWidth = this.tabControl1.GetTabRect(tc.SelectedIndex).Width - (_imgHitArea.X);
-            Rectangle r = this.tabControl1.GetTabRect(tc.SelectedIndex);
-            r.Offset(_tabWidth, _imgHitArea.Y);
-            r.Width = 16;
-            r.Height = 16;
-            if (r.Contains(p))
+            try
             {
-                TabPage TabP = (TabPage)tc.TabPages[tc.SelectedIndex];
-                tc.TabPages.Remove(TabP);
+                TabControl tc = (TabControl)sender;
+                MouseEventArgs ee = (MouseEventArgs)e;
+                Point p = ee.Location;
+                int _tabWidth = 0;
+                _tabWidth = this.tabControl1.GetTabRect(tc.SelectedIndex).Width - (_imgHitArea.X);
+                Rectangle r = this.tabControl1.GetTabRect(tc.SelectedIndex);
+                r.Offset(_tabWidth, _imgHitArea.Y);
+                r.Width = 16;
+                r.Height = 16;
+                if (r.Contains(p))
+                {
+                    TabPage TabP = (TabPage)tc.TabPages[tc.SelectedIndex];
+                    tc.TabPages.Remove(TabP);
+                }
+            }
+            catch(Exception eee)
+            {
+
             }
         }
 
@@ -92,6 +99,16 @@ namespace TestProject
             TabPage newPage = new TabPage("품목 관리    ");
 
             newPage.Controls.Add(new product());
+            newPage.Controls[0].Show();
+            tabControl1.TabPages.Add(newPage);
+            tabControl1.SelectedTab = newPage;
+        }
+
+        private void 견적서등록ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TabPage newPage = new TabPage("견적서 관리    ");
+
+            newPage.Controls.Add(new estimate());
             newPage.Controls[0].Show();
             tabControl1.TabPages.Add(newPage);
             tabControl1.SelectedTab = newPage;
