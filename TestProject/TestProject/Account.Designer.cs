@@ -90,6 +90,7 @@
             this.button2.TabStop = false;
             this.button2.Text = "수 정";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 

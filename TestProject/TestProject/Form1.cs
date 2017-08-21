@@ -23,8 +23,11 @@ namespace TestProject
         private void 거래처관리ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TabPage newPage = new TabPage("거래처 관리    ");
+            Account newAccount = new Account();
+            newAccount.Size = newPage.Size;
+            newAccount.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
-            newPage.Controls.Add(new Account());
+            newPage.Controls.Add(newAccount);
             newPage.Controls[0].Show();
             tabControl1.TabPages.Add(newPage);
             tabControl1.SelectedTab = newPage;
@@ -97,8 +100,11 @@ namespace TestProject
         private void 품목관리ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TabPage newPage = new TabPage("품목 관리    ");
+            product newProduct = new product();
+            newProduct.Size = newPage.Size;
+            newProduct.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
-            newPage.Controls.Add(new product());
+            newPage.Controls.Add(newProduct);
             newPage.Controls[0].Show();
             tabControl1.TabPages.Add(newPage);
             tabControl1.SelectedTab = newPage;
@@ -107,8 +113,11 @@ namespace TestProject
         private void 견적서등록ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TabPage newPage = new TabPage("견적서 관리    ");
+            estimate newEstimate = new estimate();
+            newEstimate.Size = newPage.Size;
+            newEstimate.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
-            newPage.Controls.Add(new estimate());
+            newPage.Controls.Add(newEstimate);
             newPage.Controls[0].Show();
             tabControl1.TabPages.Add(newPage);
             tabControl1.SelectedTab = newPage;

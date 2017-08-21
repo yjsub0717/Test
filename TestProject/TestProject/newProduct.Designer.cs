@@ -69,7 +69,7 @@
             this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(114, 30);
-            this.button2.TabIndex = 10;
+            this.button2.TabIndex = 14;
             this.button2.Text = "취 소";
             this.button2.UseVisualStyleBackColor = true;
             // 
@@ -81,9 +81,10 @@
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(114, 30);
-            this.button1.TabIndex = 9;
+            this.button1.TabIndex = 13;
             this.button1.Text = "확 인";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox1
             // 
@@ -92,7 +93,7 @@
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(435, 29);
-            this.textBox1.TabIndex = 11;
+            this.textBox1.TabIndex = 0;
             // 
             // label1
             // 
@@ -123,7 +124,7 @@
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(435, 29);
-            this.textBox2.TabIndex = 14;
+            this.textBox2.TabIndex = 1;
             // 
             // textBox3
             // 
@@ -132,7 +133,7 @@
             this.textBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(148, 29);
-            this.textBox3.TabIndex = 16;
+            this.textBox3.TabIndex = 2;
             // 
             // label3
             // 
@@ -163,7 +164,7 @@
             this.textBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(148, 29);
-            this.textBox4.TabIndex = 16;
+            this.textBox4.TabIndex = 3;
             // 
             // textBox6
             // 
@@ -172,7 +173,7 @@
             this.textBox6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(148, 29);
-            this.textBox6.TabIndex = 20;
+            this.textBox6.TabIndex = 4;
             this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label6
@@ -204,7 +205,7 @@
             this.textBox5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(148, 29);
-            this.textBox5.TabIndex = 20;
+            this.textBox5.TabIndex = 5;
             this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBox7
@@ -216,6 +217,7 @@
             this.textBox7.ReadOnly = true;
             this.textBox7.Size = new System.Drawing.Size(148, 29);
             this.textBox7.TabIndex = 23;
+            this.textBox7.TabStop = false;
             this.textBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label7
@@ -236,7 +238,7 @@
             this.textBox8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(148, 29);
-            this.textBox8.TabIndex = 24;
+            this.textBox8.TabIndex = 6;
             this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.textBox8.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
             // 
@@ -258,7 +260,7 @@
             this.textBox9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(148, 29);
-            this.textBox9.TabIndex = 27;
+            this.textBox9.TabIndex = 8;
             this.textBox9.Text = "0";
             this.textBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.textBox9.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
@@ -281,7 +283,7 @@
             this.textBox10.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(148, 29);
-            this.textBox10.TabIndex = 28;
+            this.textBox10.TabIndex = 7;
             this.textBox10.Text = "0";
             this.textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.textBox10.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
@@ -317,6 +319,7 @@
             this.textBox11.ReadOnly = true;
             this.textBox11.Size = new System.Drawing.Size(148, 29);
             this.textBox11.TabIndex = 28;
+            this.textBox11.TabStop = false;
             this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label12
@@ -337,7 +340,7 @@
             this.textBox12.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(148, 29);
-            this.textBox12.TabIndex = 27;
+            this.textBox12.TabIndex = 9;
             this.textBox12.Text = "0";
             this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.textBox12.TextChanged += new System.EventHandler(this.textBox12_TextChanged);
@@ -360,7 +363,7 @@
             this.textBox13.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(148, 29);
-            this.textBox13.TabIndex = 11;
+            this.textBox13.TabIndex = 10;
             // 
             // radioButton1
             // 
@@ -370,10 +373,11 @@
             this.radioButton1.Location = new System.Drawing.Point(440, 305);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(60, 25);
-            this.radioButton1.TabIndex = 29;
+            this.radioButton1.TabIndex = 11;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "과세";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // radioButton2
             // 
@@ -382,9 +386,10 @@
             this.radioButton2.Location = new System.Drawing.Point(508, 305);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(60, 25);
-            this.radioButton2.TabIndex = 30;
+            this.radioButton2.TabIndex = 12;
             this.radioButton2.Text = "면세";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // label14
             // 

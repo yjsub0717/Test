@@ -36,6 +36,39 @@ namespace TestProject
             address = textBox7.Text;
         }
 
-        
+        public void SetName(String param)
+        {
+            textBox1.Text = param;
+        }
+
+        public void SetPhone(String param)
+        {
+            textBox2.Text = param;
+        }
+
+        public void SetCellPhone(String param)
+        {
+            textBox3.Text = param;
+        }
+
+        public void SetFax(String param)
+        {
+            textBox4.Text = param;
+        }
+
+        public void SetShopName(String param)
+        {
+            textBox5.Text = param;
+        }
+
+        public void SetShopId(String param)
+        {
+            textBox6.Text = param;
+        }
+
+        public void SetAddress(String param)
+        {
+            textBox7.Text = param;
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace TestProject
             this.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             this.TopLevel = false;
             comboBox1.SelectedIndex = 0;;
+            printList();
         }
 
         private void listView1_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -35,6 +36,8 @@ namespace TestProject
             e.DrawText();
         }
 
+
+        // 신규 버튼
         private void button1_Click(object sender, EventArgs e)
         {
             newAccount addAccount = new newAccount();
@@ -61,23 +64,151 @@ namespace TestProject
                     conn.Close();
                 }
 
-                listView1.Items.Add(new ListViewItem(new string[] { (listView1.Items.Count + 1).ToString(), addAccount.name, addAccount.phone, addAccount.cellphone, addAccount.fax, addAccount.shopname, addAccount.shopid, addAccount.address }));
-               
+                //listView1.Items.Add(new ListViewItem(new string[] { (listView1.Items.Count + 1).ToString(), addAccount.name, addAccount.phone, addAccount.cellphone, addAccount.fax, addAccount.shopname, addAccount.shopid, addAccount.address }));
+                printList();
             }
         }
 
+        // 검색 버튼
         private void button4_Click(object sender, EventArgs e)
         {
+            printList();
+        }
+
+        // 정렬
+        private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (e.Column != sortColumn)
+            {
+                sortColumn = e.Column;
+                listView1.Sorting = SortOrder.Ascending;
+
+                if (sortColumn != 0)
+                    listView1.Columns[sortColumn].Text = listview_columnTitle[sortColumn] + " ▲";
+            }
+            else
+            {
+                if (listView1.Sorting == SortOrder.Ascending)
+                {
+                    listView1.Sorting = SortOrder.Descending;
+                    if (sortColumn != 0)
+                        listView1.Columns[sortColumn].Text = listview_columnTitle[sortColumn] + " ▼"; 
+                }
+                else
+                {
+                    listView1.Sorting = SortOrder.Ascending;
+                    if (sortColumn != 0)
+                        listView1.Columns[sortColumn].Text = listview_columnTitle[sortColumn] + " ▲";
+                }
+
+            }
+            listView1.Sort();
+            this.listView1.ListViewItemSorter = new MyListViewComparer(e.Column, listView1.Sorting);
+        }
+
+        // 삭제 버튼
+        private void button3_Click(object sender, EventArgs e)
+        {
+            foreach(ListViewItem selectedItem in listView1.SelectedItems)
+            {
+                using (MySqlConnection conn = new MySqlConnection(strConn))
+                {
+                    conn.Open();
+
+                    MySqlCommand insertCommand = new MySqlCommand();
+                    insertCommand.Connection = conn;
+                    insertCommand.CommandText = "DELETE FROM `account` WHERE `shopid` = '" + selectedItem.SubItems[6].Text + "'";
+
+                    insertCommand.ExecuteNonQuery();
+
+                    conn.Close();
+
+                    //listView1.Items.Remove(selectedItem);
+                }
+                
+            }
+            printList();
+        }
+
+        // 수정 버튼
+        private void button2_Click(object sender, EventArgs e)
+        {
+            newAccount EditAccount = new newAccount();
+
+            if (listView1.SelectedItems.Count != 0)
+            {
+                using (MySqlConnection conn = new MySqlConnection(strConn))
+                {
+                    EditAccount.SetName(listView1.SelectedItems[0].SubItems[1].Text);
+                    EditAccount.SetPhone(listView1.SelectedItems[0].SubItems[2].Text);
+                    EditAccount.SetCellPhone(listView1.SelectedItems[0].SubItems[3].Text);
+                    EditAccount.SetFax(listView1.SelectedItems[0].SubItems[4].Text);
+                    EditAccount.SetShopName(listView1.SelectedItems[0].SubItems[5].Text);
+                    EditAccount.SetShopId(listView1.SelectedItems[0].SubItems[6].Text);
+                    EditAccount.SetAddress(listView1.SelectedItems[0].SubItems[7].Text);
+
+                    conn.Open();
+
+                    string sql = "SELECT * FROM `account` WHERE `shopid` LIKE '%" + listView1.SelectedItems[0].SubItems[6].Text + "%'";
+
+                    MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
+                    adpt.Fill(ds);
+
+                    string id = null;
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        id = row["id"].ToString();
+                        Console.WriteLine(id);
+                    }
+
+                    if (EditAccount.ShowDialog() == DialogResult.OK)
+                    {
+
+                        MySqlCommand insertCommand = new MySqlCommand();
+                        insertCommand.Connection = conn;
+                        //update info set id='kch' where id='admin';
+                        insertCommand.CommandText = "UPDATE account set name = '" + EditAccount.name +
+                            "', phone = ' " + EditAccount.phone +
+                            "', cellphone = '" + EditAccount.cellphone +
+                            "', fax = '" + EditAccount.fax +
+                            "', shopname = '" + EditAccount.shopname +
+                            "', shopid = '" + EditAccount.shopid +
+                            "', address = '" + EditAccount.address +
+                            "' where id="+ id;
+                      //  insertCommand.Parameters.AddWithValue("@name", EditAccount.name);
+                      //  insertCommand.Parameters.AddWithValue("@phone", EditAccount.phone);
+                      //  insertCommand.Parameters.AddWithValue("@cellphone", EditAccount.cellphone);
+                        //insertCommand.Parameters.AddWithValue("@fax", EditAccount.fax);
+                        //insertCommand.Parameters.AddWithValue("@shopname", EditAccount.shopname);
+                        //insertCommand.Parameters.AddWithValue("@shopid", EditAccount.shopid);
+                        //insertCommand.Parameters.AddWithValue("@address", EditAccount.address);
+                        //insertCommand.Parameters.AddWithValue("@id", id);
+
+                        insertCommand.ExecuteNonQuery();
+
+
+                        //listView1.Items.Add(new ListViewItem(new string[] { (listView1.Items.Count + 1).ToString(), addAccount.name, addAccount.phone, addAccount.cellphone, addAccount.fax, addAccount.shopname, addAccount.shopid, addAccount.address }));
+                        printList();
+                    }
+
+                    conn.Close();
+                }
+            }
+        }
+
+        private void printList()
+        {
+            ds.Clear();
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
                 string sql = "SELECT * FROM account";
                 if (textBox1.Text.Equals(""))
                 {
-                     sql = "SELECT * FROM account";
+                    sql = "SELECT * FROM account";
                 }
                 else
                 {
-                    switch(comboBox1.SelectedIndex)
+                    switch (comboBox1.SelectedIndex)
                     {
                         case 0:
                             sql = "SELECT * FROM `account` WHERE `name` LIKE '%" + textBox1.Text + "%'";
@@ -119,61 +250,9 @@ namespace TestProject
                     row["shopname"].ToString(),
                     row["shopid"].ToString(),
                     row["address"].ToString() }));
-               
+
             }
             ds.Clear();
-        }
-
-        private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            if (e.Column != sortColumn)
-            {
-                sortColumn = e.Column;
-                listView1.Sorting = SortOrder.Ascending;
-
-                if (sortColumn != 0)
-                    listView1.Columns[sortColumn].Text = listview_columnTitle[sortColumn] + " ▲";
-            }
-            else
-            {
-                if (listView1.Sorting == SortOrder.Ascending)
-                {
-                    listView1.Sorting = SortOrder.Descending;
-                    if (sortColumn != 0)
-                        listView1.Columns[sortColumn].Text = listview_columnTitle[sortColumn] + " ▼"; 
-                }
-                else
-                {
-                    listView1.Sorting = SortOrder.Ascending;
-                    if (sortColumn != 0)
-                        listView1.Columns[sortColumn].Text = listview_columnTitle[sortColumn] + " ▲";
-                }
-
-            }
-            listView1.Sort();
-            this.listView1.ListViewItemSorter = new MyListViewComparer(e.Column, listView1.Sorting);
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            foreach(ListViewItem selectedItem in listView1.SelectedItems)
-            {
-                using (MySqlConnection conn = new MySqlConnection(strConn))
-                {
-                    conn.Open();
-
-                    MySqlCommand insertCommand = new MySqlCommand();
-                    insertCommand.Connection = conn;
-                    insertCommand.CommandText = "DELETE FROM `account` WHERE `shopid` = '" + selectedItem.SubItems[6].Text + "'";
-
-                    insertCommand.ExecuteNonQuery();
-
-                    conn.Close();
-
-                    listView1.Items.Remove(selectedItem);
-                }
-                
-            }
         }
     }
 

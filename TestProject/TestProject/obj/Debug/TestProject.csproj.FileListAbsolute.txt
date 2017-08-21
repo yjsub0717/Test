@@ -24,3 +24,4 @@ C:\Users\Jisup\Desktop\구세\TestProject\TestProject\obj\Debug\TestProject.cspr
 C:\Users\Jisup\Desktop\구세\TestProject\TestProject\obj\Debug\TestProject.newProduct.resources
 C:\Users\Jisup\Desktop\구세\TestProject\TestProject\obj\Debug\TestProject.csproj.ResolveComReference.cache
 C:\Users\Jisup\Desktop\구세\TestProject\TestProject\obj\Debug\TestProject.estimate.resources
+C:\Users\Jisup\Desktop\구세\TestProject\TestProject\obj\Debug\TestProject.selectProduct.resources
