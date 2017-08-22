@@ -59,6 +59,7 @@ namespace TestProject
                 }
                 MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
                 adpt.Fill(ds);
+                conn.Close();
             }
 
             listView1.Items.Clear();
