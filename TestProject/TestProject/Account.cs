@@ -18,6 +18,7 @@ namespace TestProject
         String strConn = "Server=13.124.90.82; Port=3306; Database=rntp; Uid=root; Pwd=rntprntp;";
         DataSet ds = new DataSet();
         private String[] listview_columnTitle = { "", "거래처명", "전화번호", "휴대전화", "팩스", "사업자상호", "사업자번호", "주소" };
+        ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs> splash = null;
 
         public Account()
         {
@@ -199,6 +200,10 @@ namespace TestProject
         private void printList()
         {
             ds.Clear();
+            splash = new ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs>(x => x.ProgressChanged);
+            splash.Show();
+            nowLoading.ProgressChangedEventArgs p = new nowLoading.ProgressChangedEventArgs();
+
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
                 string sql = "SELECT * FROM account";
@@ -240,6 +245,12 @@ namespace TestProject
                 conn.Close();
             }
 
+            int maxNumber = ds.Tables[0].Rows.Count;
+            int highestPercentageReached = 0;
+
+            int percentComplete = 0;
+            int i = 0;
+
             listView1.Items.Clear();
             foreach (DataRow row in ds.Tables[0].Rows)
             {
@@ -252,8 +263,28 @@ namespace TestProject
                     row["shopid"].ToString(),
                     row["address"].ToString() }));
 
+                percentComplete = (int)((float)i / (float)maxNumber * 100);
+                if (percentComplete > highestPercentageReached)
+                {
+                    p.Progress = percentComplete;
+                    splash.OnProgressChanged(this, p);
+                    highestPercentageReached = percentComplete;
+                    //bw.ReportProgress(percentComplete);
+                }
+                i++;
             }
             ds.Clear();
+            splash.Close();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            newAccounts newForm = new newAccounts();
+
+            if(newForm.ShowDialog() == DialogResult.OK)
+            {
+                printList();
+            }
         }
     }
 

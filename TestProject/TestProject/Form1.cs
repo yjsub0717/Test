@@ -122,5 +122,31 @@ namespace TestProject
             tabControl1.TabPages.Add(newPage);
             tabControl1.SelectedTab = newPage;
         }
+
+        private void 납품지시서ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TabPage newPage = new TabPage("납품지시서 관리    ");
+            delivery newDelivery = new delivery();
+            newDelivery.Size = newPage.Size;
+            newDelivery.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+
+            newPage.Controls.Add(newDelivery);
+            newPage.Controls[0].Show();
+            tabControl1.TabPages.Add(newPage);
+            tabControl1.SelectedTab = newPage;
+        }
+
+        private void 간접납품ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TabPage newPage = new TabPage("간접납품 관리    ");
+            indirect newIndirect = new indirect();
+            newIndirect.Size = newPage.Size;
+            newIndirect.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+
+            newPage.Controls.Add(newIndirect);
+            newPage.Controls[0].Show();
+            tabControl1.TabPages.Add(newPage);
+            tabControl1.SelectedTab = newPage;
+        }
     }
 }

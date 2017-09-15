@@ -15,16 +15,16 @@ namespace TestProject
 {
     public partial class estimate : Form
     {
-        List<string> testData = new List<string>() { "Excel", "Access", "Word", "OneNote" };
 
         Excel.Application excelApp = null;
         Excel.Workbook wb = null;
         Excel.Worksheet ws = null;
 
+        ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs> splash = null;
+        ListViewItem.ListViewSubItem SelectedLSI;
+
         string name;
         string date;
-        Boolean launch;
-        Boolean isNew = true;
 
         String strConn = "Server=13.124.90.82; Port=3306; Database=rntp; Uid=root; Pwd=rntprntp;";
         DataSet ds = new DataSet();
@@ -32,7 +32,7 @@ namespace TestProject
         public estimate()
         {
             InitializeComponent();
-            this.TopLevel = false;
+            this.TopLevel = false; 
         }
 
         private static void ReleaseExcelObject(object obj)
@@ -58,13 +58,16 @@ namespace TestProject
 
         private void button1_Click(object sender, EventArgs e)
         {
-            newEstimate newForm = new newEstimate();
+            listView1.Items.Clear();
+            textBox3.Text = "";
+            textBox4.Text = "";
+
+            newEstimate newForm = new newEstimate("estimateList");
 
             if(newForm.ShowDialog() == DialogResult.OK)
             {
                 this.name = newForm.name;
                 this.date = newForm.date;
-                this.launch = newForm.launch;
 
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm|All files|*.*";
@@ -72,9 +75,12 @@ namespace TestProject
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    isNew = true;
                     listView1.Items.Clear();
                     FileName = ofd.FileName;
+
+                    splash = new ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs>(x => x.ProgressChanged);
+                    splash.Show();
+                    nowLoading.ProgressChangedEventArgs p = new nowLoading.ProgressChangedEventArgs();
 
                     try
                     {
@@ -98,23 +104,21 @@ namespace TestProject
                         for (int r = 2; r <= data.GetLength(0); r++)
                         {
                             listView1.Items.Add(new ListViewItem(new string[] {
-                        data[r, 1] == null ? "" : data[r, 1].ToString(), 
-                        "",
-                        "",
-                        "",
-                        "",
-                        data[r, 5] == null ? "" : data[r, 5].ToString(), 
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        data[r, 2] == null ? "" : data[r, 2].ToString(), 
-                        data[r, 3] == null ? "" : data[r, 3].ToString(), 
-                        data[r, 4] == null ? "" : data[r, 4].ToString(), 
-                        data[r, 5] == null ? "" : data[r, 5].ToString(), 
-                        data[r, 6] == null ? "" : data[r, 6].ToString() }));
+                            data[r, 1] == null ? "" : data[r, 1].ToString(), 
+                            "",
+                            "",
+                            "",
+                            "",
+                            data[r, 5] == null ? "" : data[r, 5].ToString(), 
+                            "",
+                            "",
+                            "",
+                            "",
+                            data[r, 2] == null ? "" : data[r, 2].ToString(), 
+                            data[r, 3] == null ? "" : data[r, 3].ToString(), 
+                            data[r, 4] == null ? "" : data[r, 4].ToString(), 
+                            data[r, 5] == null ? "" : data[r, 5].ToString(), 
+                            data[r, 6] == null ? "" : data[r, 6].ToString() }));
 
                             //for (int c = 1; c <= data.GetLength(1); c++)
                             //{
@@ -140,8 +144,86 @@ namespace TestProject
                         ReleaseExcelObject(wb);
                         ReleaseExcelObject(excelApp);
                     }
+
+                    int Year = (Int32.Parse(this.date) / 100);
+                    int Month = (Int32.Parse(this.date) % 100) - 1;
+                    string strDate = null;
+
+                    if (Month == 0)
+                    {
+                        Year = Year - 1;
+                        Month = 12;
+                    }
+                    strDate = Year.ToString("D2") + Month.ToString("D2");
+
+                    int maxNumber = listView1.Items.Count;
+                    int highestPercentageReached = 0;
+
+                    int percentComplete = 0;
+                    int i = 0;
+
+                     using (MySqlConnection conn = new MySqlConnection(strConn))
+                    {
+                        try
+                        {
+                            conn.Open();
+
+                            string sql = "SELECT * FROM `estimateList` WHERE account = '" + this.name + "' AND date = '" + strDate + "'";
+
+                            ds.Clear();
+                            MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
+                            adpt.Fill(ds);
+
+                            int id = 0;
+
+                            if (ds.Tables[0].Rows.Count == 1)
+                            {
+                                id = (int)ds.Tables[0].Rows[0]["id"];
+
+                                foreach (ListViewItem item in listView1.Items)
+                                {
+                                    percentComplete = (int)((float)i / (float)maxNumber * 100);
+                                    if (percentComplete > highestPercentageReached)
+                                    {
+                                        p.Progress = percentComplete;
+                                        splash.OnProgressChanged(this, p);
+                                        highestPercentageReached = percentComplete;
+                                        //bw.ReportProgress(percentComplete);
+                                    }
+                                    i++;
+
+                                    sql = "SELECT * FROM `estimateItem` WHERE estimate_id = " + id + " AND name_excel = '" + item.SubItems[10].Text + "'";
+                                    ds.Clear();
+                                    adpt = new MySqlDataAdapter(sql, conn);
+                                    adpt.Fill(ds);
+
+                                    if (ds.Tables[0].Rows.Count == 1)
+                                    {
+                                        item.SubItems[1].Text = ds.Tables[0].Rows[0]["product_name"].ToString();
+                                        item.SubItems[2].Text = ds.Tables[0].Rows[0]["maker"].ToString();
+                                        item.SubItems[3].Text = ds.Tables[0].Rows[0]["standard"].ToString();
+                                        item.SubItems[4].Text = ds.Tables[0].Rows[0]["unit"].ToString();
+                                        item.SubItems[6].Text = ds.Tables[0].Rows[0]["original_price"].ToString();
+                                        item.SubItems[7].Text = ds.Tables[0].Rows[0]["estimate_price"].ToString();
+                                        item.SubItems[8].Text = ds.Tables[0].Rows[0]["school_price"].ToString();
+                                        item.SubItems[9].Text = ds.Tables[0].Rows[0]["total_price"].ToString();
+                                    }
+                                }
+
+                            }
+                        }
+                        catch (Exception eee)
+                        {
+                            MessageBox.Show("저장에 실패하였습니다.");
+                        }
+
+                        conn.Close();
+                    }
                 }
+                splash.Close();
             }
+            calculateTotal();
+            listView1.Focus();
         }
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -150,7 +232,7 @@ namespace TestProject
             {
                 ListView.SelectedListViewItemCollection items = listView1.SelectedItems;
                 ListViewItem lvItem = items[0];
-                string name = lvItem.SubItems[12].Text;
+                string name = lvItem.SubItems[1].Text != "" ? lvItem.SubItems[1].Text : lvItem.SubItems[10].Text;
 
                 selectProduct newForm = new selectProduct();
 
@@ -162,10 +244,12 @@ namespace TestProject
                     lvItem.SubItems[2].Text = newForm.maker;
                     lvItem.SubItems[3].Text = newForm.standard;
                     lvItem.SubItems[4].Text = newForm.unit;
-                    lvItem.SubItems[6].Text = newForm.str_estimate_price;
-                    lvItem.SubItems[7].Text = newForm.str_school_price;
+                    lvItem.SubItems[6].Text = textTrans(newForm.str_original_price);
+                    lvItem.SubItems[7].Text = textTrans(newForm.str_estimate_price);
+                    lvItem.SubItems[8].Text = textTrans(newForm.str_school_price);
 
-                    lvItem.SubItems[8].Text = (double.Parse(lvItem.SubItems[5].Text) * Int32.Parse(lvItem.SubItems[7].Text)).ToString();
+                    lvItem.SubItems[9].Text = textTrans((double.Parse(lvItem.SubItems[5].Text.Replace(",", "")) * Int32.Parse(lvItem.SubItems[8].Text.Replace(",", ""))).ToString());
+                    calculateTotal();
                 }
             }
         }
@@ -175,24 +259,189 @@ namespace TestProject
         {
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
-                conn.Open();
-
-                if(isNew)
+                try
                 {
-                    MySqlCommand insertCommand = new MySqlCommand();
-                    insertCommand.Connection = conn;
-                    insertCommand.CommandText = "INSERT INTO estimateList(account, date, launch) VALUES(@account, @date, @launch)";
-                    insertCommand.Parameters.AddWithValue("@account", this.name);
-                    insertCommand.Parameters.AddWithValue("@date", this.date);
-                    if (this.launch)
-                        insertCommand.Parameters.AddWithValue("@launch", 1);
-                    else
-                        insertCommand.Parameters.AddWithValue("@launch", 0);
+                    conn.Open();
 
-                    insertCommand.ExecuteNonQuery();
+
+                    string sql = "SELECT * FROM `estimateList` WHERE account = '" + this.name + "' AND date = '" + this.date + "'";
+
+                    ds.Clear();
+                    MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
+                    adpt.Fill(ds);
+
+                    int id = 0;
+
+                    if (ds.Tables[0].Rows.Count == 1)
+                    {
+                        id = (int)ds.Tables[0].Rows[0]["id"];
+
+                        MySqlCommand insertCommand2 = new MySqlCommand();
+                        insertCommand2.Connection = conn;
+                        sql = "UPDATE estimateList set account = '" + this.name +
+                            "', date = ' " + this.date +
+                            "', bid = " + (textBox3.Text == "" ? "null" : textBox3.Text.Replace(",", "")) +
+                            ", base = " + (textBox4.Text == "" ? "null" : textBox4.Text.Replace(",", "")) +
+                            " where id=" + id;
+
+                        insertCommand2.CommandText = sql;
+                        insertCommand2.ExecuteNonQuery();
+
+                        foreach (ListViewItem item in listView1.Items)
+                        {
+                            MySqlCommand insertCommand = new MySqlCommand();
+                            insertCommand.Connection = conn;
+                            sql = "UPDATE estimateItem set product_name = '" + item.SubItems[1].Text +
+                            "', maker = ' " + item.SubItems[2].Text +
+                            "', standard = '" + item.SubItems[3].Text +
+                            "', unit = '" + item.SubItems[4].Text;
+
+                            if (item.SubItems[5].Text.Equals(""))
+                                sql += "', total = null";
+                            else
+                                sql += "', total = " + float.Parse(item.SubItems[5].Text);
+
+                            if (item.SubItems[6].Text.Equals(""))
+                                sql += ", original_price = null";
+                            else
+                                sql += ", original_price = " + float.Parse(item.SubItems[6].Text);
+
+                            if (item.SubItems[7].Text.Equals(""))
+                                sql += ", estimate_price = null";
+                            else
+                                sql += ", estimate_price = " + float.Parse(item.SubItems[7].Text);
+
+                            if (item.SubItems[8].Text.Equals(""))
+                                sql += ", school_price = null";
+                            else
+                                sql += ", school_price = " + float.Parse(item.SubItems[8].Text);
+
+                            if (item.SubItems[9].Text.Equals(""))
+                                sql += ", total_price = null";
+                            else
+                                sql += ", total_price = " + float.Parse(item.SubItems[9].Text);
+
+                            //if (item.SubItems[10].Text.Equals(""))
+                            //    sql += ", base_price = null";
+                            //else
+                            //    sql += ", base_price = " + float.Parse(item.SubItems[10].Text);
+
+                            //if (item.SubItems[11].Text.Equals(""))
+                            //    sql += ", bid_price = null";
+                            //else
+                            //    sql += ", bid_price = " + float.Parse(item.SubItems[11].Text);
+
+                            //if (item.SubItems[12].Text.Equals(""))
+                            //    sql += ", rate_bid = null";
+                            //else
+                            //    sql += ", rate_bid = " + float.Parse(item.SubItems[12].Text);
+
+                            sql += ", name_excel = '" + item.SubItems[10].Text +
+                            "', standard_excel = '" + item.SubItems[11].Text +
+                            "', unit_excel = '" + item.SubItems[12].Text;
+
+                            if (item.SubItems[13].Text.Equals(""))
+                                sql += "', total_excel = null";
+                            else
+                                sql += "', total_excel = " + float.Parse(item.SubItems[13].Text);
+
+                            sql += ", text_excel = '" + item.SubItems[14].Text +
+                            "' where estimate_id=" + id + " AND no = " + item.SubItems[0].Text;
+
+                            insertCommand.CommandText = sql;
+                            insertCommand.ExecuteNonQuery();
+                        }
+                    }
+                    else if (ds.Tables[0].Rows.Count == 0)
+                    {
+                        MySqlCommand insertCommand = new MySqlCommand();
+                        insertCommand.Connection = conn;
+                        insertCommand.CommandText = "INSERT INTO estimateList(account, date, bid, base) VALUES(@account, @date, @bid, @base)";
+                        insertCommand.Parameters.AddWithValue("@account", this.name);
+                        insertCommand.Parameters.AddWithValue("@date", this.date);
+                        insertCommand.Parameters.AddWithValue("@bid", textBox3.Text == "" ? null: textBox3.Text.Replace(",", ""));
+                        insertCommand.Parameters.AddWithValue("@base", textBox4.Text == "" ? null : textBox4.Text.Replace(",", ""));
+
+                        insertCommand.ExecuteNonQuery();
+
+                        sql = "SELECT * FROM `estimateList` WHERE account = '" + this.name + "' AND date = '" + this.date + "'";
+
+                        ds.Clear();
+                        adpt = new MySqlDataAdapter(sql, conn);
+                        adpt.Fill(ds);
+
+                        id = 0;
+
+                        if (ds.Tables[0].Rows.Count == 1)
+                        {
+                            id = (int)ds.Tables[0].Rows[0]["id"];
+                        }
+
+                        foreach (ListViewItem item in listView1.Items)
+                        {
+                            insertCommand = new MySqlCommand();
+                            insertCommand.Connection = conn;
+                            insertCommand.CommandText = "INSERT INTO estimateItem(estimate_id, no, product_name, maker, standard, unit, total, original_price, estimate_price, school_price, total_price, name_excel, standard_excel, unit_excel, total_excel, text_excel) VALUES(@estimate_id, @no, @product_name, @maker, @standard, @unit, @total, @original_price, @estimate_price, @school_price, @total_price, @name_excel, @standard_excel, @unit_excel, @total_excel, @text_excel)";
+                            insertCommand.Parameters.AddWithValue("@estimate_id", id);
+                            insertCommand.Parameters.AddWithValue("@no", Int32.Parse(item.SubItems[0].Text));
+                            insertCommand.Parameters.AddWithValue("@product_name", item.SubItems[1].Text);
+                            insertCommand.Parameters.AddWithValue("@maker", item.SubItems[2].Text);
+                            insertCommand.Parameters.AddWithValue("@standard", item.SubItems[3].Text);
+                            insertCommand.Parameters.AddWithValue("@unit", item.SubItems[4].Text);
+                            if (item.SubItems[5].Text.Equals(""))
+                                insertCommand.Parameters.AddWithValue("@total", null);
+                            else
+                                insertCommand.Parameters.AddWithValue("@total", float.Parse(item.SubItems[5].Text));
+
+                            if (item.SubItems[6].Text.Equals(""))
+                                insertCommand.Parameters.AddWithValue("@original_price", null);
+                            else
+                                insertCommand.Parameters.AddWithValue("@original_price", float.Parse(item.SubItems[6].Text));
+
+                            if (item.SubItems[7].Text.Equals(""))
+                                insertCommand.Parameters.AddWithValue("@estimate_price", null);
+                            else
+                                insertCommand.Parameters.AddWithValue("@estimate_price", float.Parse(item.SubItems[7].Text));
+
+                            if (item.SubItems[8].Text.Equals(""))
+                                insertCommand.Parameters.AddWithValue("@school_price", null);
+                            else
+                                insertCommand.Parameters.AddWithValue("@school_price", float.Parse(item.SubItems[8].Text));
+                            if (item.SubItems[9].Text.Equals(""))
+                                insertCommand.Parameters.AddWithValue("@total_price", null);
+                            else
+                                insertCommand.Parameters.AddWithValue("@total_price", float.Parse(item.SubItems[9].Text));
+                            //if (item.SubItems[10].Text.Equals(""))
+                            //    insertCommand.Parameters.AddWithValue("@base_price", null);
+                            //else
+                            //    insertCommand.Parameters.AddWithValue("@base_price", float.Parse(item.SubItems[10].Text));
+                            //if (item.SubItems[11].Text.Equals(""))
+                            //    insertCommand.Parameters.AddWithValue("@bid_price", null);
+                            //else
+                            //    insertCommand.Parameters.AddWithValue("@bid_price", float.Parse(item.SubItems[11].Text));
+                            //if (item.SubItems[12].Text.Equals(""))
+                            //    insertCommand.Parameters.AddWithValue("@rate_bid", null);
+                            //else
+                            //    insertCommand.Parameters.AddWithValue("@rate_bid", float.Parse(item.SubItems[12].Text));
+                            insertCommand.Parameters.AddWithValue("@name_excel", item.SubItems[10].Text);
+                            insertCommand.Parameters.AddWithValue("@standard_excel", item.SubItems[11].Text);
+                            insertCommand.Parameters.AddWithValue("@unit_excel", item.SubItems[12].Text);
+                            if (item.SubItems[13].Text.Equals(""))
+                                insertCommand.Parameters.AddWithValue("@total_excel", null);
+                            else
+                                insertCommand.Parameters.AddWithValue("@total_excel", float.Parse(item.SubItems[13].Text));
+                            insertCommand.Parameters.AddWithValue("@text_excel", item.SubItems[14].Text);
+
+                            insertCommand.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageBox.Show("성공적으로 저장되었습니다.");
                 }
-
-                // 견적서 번호 알아와서 견적 아이템 테이블에 넣기
+                catch (Exception eee)
+                {
+                    MessageBox.Show("저장에 실패하였습니다.");
+                }
 
                 conn.Close();
             }   
@@ -201,9 +450,307 @@ namespace TestProject
         // 불러오기
         private void button2_Click(object sender, EventArgs e)
         {
-            isNew = false;   
+            listView1.Items.Clear();
+            estimate_list newForm = new estimate_list();
+
+            if(newForm.ShowDialog() == DialogResult.OK)
+            {
+                this.name = newForm.name;
+                this.date = newForm.date;
+                textBox3.Text = textTrans(newForm.bid_price);
+                textBox4.Text = textTrans(newForm.base_price);
+                using (MySqlConnection conn = new MySqlConnection(strConn))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT * FROM `estimateList` WHERE account = '" + this.name + "' AND date = '" + this.date + "'";
+
+                    ds.Clear();
+                    MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
+                    adpt.Fill(ds);
+
+                    int id = 0;
+
+                    if (ds.Tables[0].Rows.Count == 1)
+                    {
+                        id = (int)ds.Tables[0].Rows[0]["id"];
+                    }
+
+                    sql = "SELECT * FROM `estimateItem` WHERE estimate_id = " + id;
+
+                    ds.Clear();
+                    adpt = new MySqlDataAdapter(sql, conn);
+                    adpt.Fill(ds);
+
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        listView1.Items.Add(new ListViewItem(new string[] {
+                        row["no"].ToString(), 
+                        row["product_name"].ToString(),
+                        row["maker"].ToString(),
+                        row["standard"].ToString(),
+                        row["unit"].ToString(),
+                        row["total"].ToString(),
+                        row["original_price"].ToString(),
+                        row["estimate_price"].ToString(),
+                        row["school_price"].ToString(),
+                        row["total_price"].ToString(),
+                        row["name_excel"].ToString(),
+                        row["standard_excel"].ToString(),
+                        row["unit_excel"].ToString(),
+                        row["total_excel"].ToString(),
+                        row["text_excel"].ToString() }));
+
+                    }
+
+                    conn.Close();
+                }
+                listView1.Focus();
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("견적서가 삭제됩니다.\r계속 하시겠습니까?", "견적서 삭제", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                string sql = "DELETE FROM `estimateList` WHERE account = '" + this.name + "' AND date = '" + this.date + "'";
+
+                using (MySqlConnection conn = new MySqlConnection(strConn))
+                {
+                    conn.Open();
+
+                    MySqlCommand insertCommand = new MySqlCommand();
+                    insertCommand.Connection = conn;
+                    insertCommand.CommandText = sql;
+
+                    insertCommand.ExecuteNonQuery();
+
+                    conn.Close();
+                    listView1.Items.Clear();
+                    this.name = null;
+                    this.date = null;
+
+                    //listView1.Items.Remove(selectedItem);
+                }
+            }
+        }
+
+        //private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        //{
+        //    //if (!(char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back)))
+        //    //{
+        //    //    e.Handled = true;
+        //    //}
+        //    try
+        //    {
+        //        if ((char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back)))
+        //        {
+        //            if (textBox3.Text.Length > 2)
+        //            {
+        //                string s;
+        //                if (e.KeyChar == Convert.ToChar(Keys.Back))
+        //                {
+        //                    s = ExtractComma(textBox3.Text.Substring(0,textBox3.Text.Length - 1));
+        //                    textBox3.Text = PointMoney(s);
+        //                    textBox3.Select(textBox3.Text.Length, 1);
+        //                    e.Handled = true;
+        //                }
+        //                else
+        //                {
+        //                    s = ExtractComma(textBox3.Text);
+        //                    textBox3.Text = PointMoney(s + e.KeyChar); 
+        //                    textBox3.Select(textBox3.Text.Length - 1, 1);
+        //                }
+                        
+        //            }
+        //        }
+        //        else { e.Handled = true; }
+        //    }
+        //    catch (Exception)
+        //    {
+        //    } 
+        //}
+        //public static string ExtractComma(string str) 
+        //{        
+        //    if ( (str.IndexOf(",") <= 0)) 
+        //        return str; 
+        //    str = str.Substring(0, str.IndexOf(",")) + str.Substring(str.IndexOf(",")+1); 
+
+        //    if ( (str.IndexOf(",") <= 0)) 
+        //        return str; 
+        //    else 
+        //        return ExtractComma(str); 
+        //} 
+         
+        //public static string PointMoney(string s) 
+        //{                        
+        //    char[] c = new char[15]; 
+        //    int j=15; 
+        //    int readcnt=0; 
+        //    string s1=""; 
+
+        //    if (s.Length > 3) 
+        //    {                                
+        //        for(int i=s.Length-1; i>=0; i--) 
+        //        { 
+        //            j--; 
+        //            c[j] = s[i]; 
+        //            readcnt++; 
+        //            if (readcnt == 3 && i != 0) 
+        //            { 
+        //                readcnt=0; 
+        //                j--; 
+        //                c[j] = ','; 
+        //            }                                
+        //        } 
+        //        s1 = new String(c, j, 15-j); 
+        //    } 
+        //    else 
+        //        s1 = s; 
+        //    return s1; 
+        //} 
+
+        private void textBox3_Leave(object sender, EventArgs e)
+        {
+            if (textBox3.Text != "")
+            {
+                textBox3.Text = textTrans(textBox3.Text);
+            }
+        }
+
+        private void textBox4_Leave(object sender, EventArgs e)
+        {
+            if (textBox4.Text != "")
+            {
+                textBox4.Text = textTrans(textBox4.Text);
+            }
         }
 
 
+        private string textTrans(string str)
+        {
+            string result = "";
+
+            if (str != "")
+            {
+                result = str.Replace(",", "");//숫자변환시 콤마로 발생하는 에러 방지
+                result = String.Format("{0:#,###}", Convert.ToInt32(result));
+            }
+
+            return result;
+        }
+
+        private void calculateTotal()
+        {
+            int total = 0;
+            int total2 = 0;
+
+            foreach (ListViewItem item in listView1.Items)
+            {
+                if (item.SubItems[7].Text != "")
+                    total += (int)(Convert.ToInt32(item.SubItems[7].Text.Replace(",", "")) * float.Parse(item.SubItems[5].Text));
+
+                if (item.SubItems[8].Text != "")
+                    total2 += (int)(Convert.ToInt32(item.SubItems[8].Text.Replace(",", "")) * float.Parse(item.SubItems[5].Text));
+            }
+            textBox1.Text = String.Format("{0:#,###}", total);
+            textBox2.Text = String.Format("{0:#,###}", total2);
+        }
+
+        private void calculateRate()
+        {
+            if (textBox4.Text != "" && textBox3.Text != "")
+            {
+                string lgsText;
+                lgsText = textBox3.Text.Replace(",", "");
+                int basePrice = Convert.ToInt32(lgsText);
+
+                lgsText = textBox4.Text.Replace(",", "");
+                int bidPrice = Convert.ToInt32(lgsText);
+
+                textBox5.Text = (((float)basePrice / bidPrice) * 100).ToString("##.#") + "%";
+            }
+            else
+            {
+                textBox5.Text = "";
+            }
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            calculateRate();
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            calculateRate();
+        }
+
+        private void HideTextEditor()
+        {
+            //ListViewHitTestInfo i = listView1.HitTest(e.X, e.Y);
+
+            //if (i.SubItem == i.Item.SubItems[6])
+            //{
+            TxtEdit.Visible = false;
+            if (SelectedLSI != null)
+                SelectedLSI.Text = textTrans(TxtEdit.Text);
+            SelectedLSI = null;
+            TxtEdit.Text = "";
+            calculateTotal();
+            listView1.Focus();
+            //}
+        }
+
+        private void listView1_MouseUp(object sender, MouseEventArgs e)
+        {
+            ListViewHitTestInfo i = listView1.HitTest(e.X, e.Y);
+            if (i.SubItem == null) return;
+            if (i.SubItem == i.Item.SubItems[8] && i.Item.SubItems[1].Text != "")
+            {
+                SelectedLSI = i.SubItem;
+                if (SelectedLSI == null)
+                    return;
+
+                int border = 0;
+                switch (listView1.BorderStyle)
+                {
+                    case BorderStyle.FixedSingle:
+                        border = 1;
+                        break;
+                    case BorderStyle.Fixed3D:
+                        border = 2;
+                        break;
+                }
+
+                int CellWidth = SelectedLSI.Bounds.Width;
+                int CellHeight = SelectedLSI.Bounds.Height;
+                int CellLeft = border + listView1.Left + i.SubItem.Bounds.Left;
+                int CellTop = listView1.Top + i.SubItem.Bounds.Top;
+                //int CellTop = SelectedLSI.Bounds.Top;
+                // First Column
+                if (i.SubItem == i.Item.SubItems[0])
+                    CellWidth = listView1.Columns[0].Width;
+
+                    TxtEdit.Location = new Point(CellLeft, CellTop);
+                    TxtEdit.Size = new Size(CellWidth, CellHeight);
+                    TxtEdit.Visible = true;
+                    TxtEdit.BringToFront();
+                    TxtEdit.Text = i.SubItem.Text;
+                    TxtEdit.Select();
+                    TxtEdit.SelectAll();
+            }
+        }
+
+        private void TxtEdit_Leave(object sender, EventArgs e)
+        {
+            HideTextEditor();
+        }
+
+        private void TxtEdit_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+                HideTextEditor();
+        }
     }
 }

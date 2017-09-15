@@ -11,26 +11,19 @@ using MySql.Data.MySqlClient;
 
 namespace TestProject
 {
-    public partial class estimate_list : Form
+    public partial class deliveryList : Form
     {
         String strConn = "Server=13.124.90.82; Port=3306; Database=rntp; Uid=root; Pwd=rntprntp;";
         DataSet ds = new DataSet();
 
         public string name = null;
         public string date = null;
-        public string bid_price = null;
-        public string base_price = null;
+        public Boolean launch = true;
 
-
-        public estimate_list()
+        public deliveryList()
         {
             InitializeComponent();
             comboBox1.SelectedIndex = 0;
-            printList();
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
             printList();
         }
 
@@ -39,20 +32,20 @@ namespace TestProject
             ds.Clear();
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
-                string sql = "SELECT * FROM estimateList";
+                string sql = "SELECT * FROM deliveryList";
                 if (textBox1.Text.Equals(""))
                 {
-                    sql = "SELECT * FROM estimateList";
+                    sql = "SELECT * FROM deliveryList";
                 }
                 else
                 {
                     switch (comboBox1.SelectedIndex)
                     {
                         case 0:
-                            sql = "SELECT * FROM `estimateList` WHERE `account` LIKE '%" + textBox1.Text + "%'";
+                            sql = "SELECT * FROM `deliveryList` WHERE `account` LIKE '%" + textBox1.Text + "%'";
                             break;
                         case 1:
-                            sql = "SELECT * FROM `estimateList` WHERE `date` LIKE '%" + textBox1.Text + "%'";
+                            sql = "SELECT * FROM `deliveryList` WHERE `date` LIKE '%" + textBox1.Text + "%'";
                             break;
                         default:
                             break;
@@ -69,14 +62,13 @@ namespace TestProject
                 listView1.Items.Add(new ListViewItem(new string[] {"", row["id"].ToString(), 
                     row["account"].ToString(), 
                     row["date"].ToString(),
-                    row["bid"].ToString(),
-                    row["base"].ToString()}));
+                    row["launch"].Equals(true) ? "중식" : "석식" }));
 
             }
             ds.Clear();
         }
 
-        private void estimate_list_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (listView1.SelectedItems.Count == 1)
             {
@@ -84,8 +76,7 @@ namespace TestProject
                 ListViewItem lvItem = items[0];
                 name = lvItem.SubItems[2].Text;
                 date = lvItem.SubItems[3].Text;
-                bid_price = lvItem.SubItems[4].Text;
-                base_price = lvItem.SubItems[5].Text;
+                launch = lvItem.SubItems[4].Text.Equals("중식");
 
                 this.DialogResult = DialogResult.OK;
             }

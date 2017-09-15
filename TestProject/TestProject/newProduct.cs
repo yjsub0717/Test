@@ -44,15 +44,15 @@ namespace TestProject
 
         private void price_Calculate()
         {
-            int discountRate = 0;
-            int discountRate2 = 0;
+            float discountRate = 0;
+            float discountRate2 = 0;
             try
             {
                 if (Int32.TryParse(textBox8.Text, out school_price))
                 {
-                    if (Int32.TryParse(textBox10.Text, out discountRate))
+                    if (float.TryParse(textBox10.Text, out discountRate))
                     {
-                        if (Int32.TryParse(textBox9.Text, out discountRate2))
+                        if (float.TryParse(textBox9.Text, out discountRate2))
                         {
                             price = (int)((school_price * ((100 - discountRate) / 100.0)) * ((100 - discountRate2) / 100.0));
 
@@ -68,12 +68,12 @@ namespace TestProject
         }
         private void origin_price_Calculate()
         {
-            int discountRate = 0;
+            float discountRate = 0;
             try
             {
                 if (Int32.TryParse(textBox8.Text, out school_price))
                 {
-                    if (Int32.TryParse(textBox12.Text, out discountRate))
+                    if (float.TryParse(textBox12.Text, out discountRate))
                     {
                         origin_price = (int)(school_price * ((100 - discountRate) / 100.0));
 

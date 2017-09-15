@@ -20,9 +20,11 @@ namespace TestProject
         public string standard = null;
         public string maker = null;
         public string unit = null;
+        public string str_original_price = null;
         public string str_school_price = null;
         public string str_estimate_price = null;
         public string account = null;
+        public string tax = null;
 
         public selectProduct()
         {
@@ -106,9 +108,17 @@ namespace TestProject
                 unit = lvItem.SubItems[4].Text;
                 str_school_price = lvItem.SubItems[5].Text;
                 str_estimate_price = lvItem.SubItems[6].Text;
+                str_original_price = lvItem.SubItems[9].Text;
+                tax = lvItem.SubItems[12].Text;
 
                 this.DialogResult = DialogResult.OK;
             }
+        }
+
+        private void textBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+                printList();
         }
     }
 

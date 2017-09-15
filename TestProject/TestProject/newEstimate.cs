@@ -18,39 +18,53 @@ namespace TestProject
 
         public string name;
         public string date;
-        public Boolean launch; // true == 1, false == 0
+        private string str;
 
-        public newEstimate()
+        public newEstimate(string str)
         {
             InitializeComponent();
+            this.str = str;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            checkValidate();
+        }
+
+        private void textBox2_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+                checkValidate();
+        }
+
+
+        private void checkValidate()
+        {
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
-                ds.Clear();
-                string sql = null;
-                if (radioButton1.Checked)
-                    sql = "SELECT * FROM `estimateList` WHERE account = '" + textBox1.Text + "' AND date = '" + textBox2.Text + "' AND launch = 1";
-                else
-                    sql = "SELECT * FROM `estimateList` WHERE account = '" + textBox1.Text + "' AND date = '" + textBox2.Text + "' AND launch = 0";
-                MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
-                adpt.Fill(ds);
-                conn.Close();
-
-                if (ds.Tables[0].Rows.Count == 0)
+                if (textBox1.Text.Equals("") || textBox2.Text.Equals(""))
                 {
-                    name = textBox1.Text;
-                    date = textBox2.Text;
-                    if (radioButton1.Checked) launch = true;
-                    else launch = false;
-
-                    this.DialogResult = DialogResult.OK;
+                    label3.Text = "빈칸을 모두 채워주세요.";
                 }
                 else
                 {
-                    label3.Text = "중복된 견적서입니다.";
+                    ds.Clear();
+                    string sql = "SELECT * FROM `" + str + "` WHERE account = '" + textBox1.Text + "' AND date = '" + textBox2.Text + "'";
+                    MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
+                    adpt.Fill(ds);
+                    conn.Close();
+
+                    if (ds.Tables[0].Rows.Count == 0)
+                    {
+                        name = textBox1.Text;
+                        date = textBox2.Text;
+
+                        this.DialogResult = DialogResult.OK;
+                    }
+                    else
+                    {
+                        label3.Text = "중복된 견적서입니다.";
+                    }
                 }
             }
         }

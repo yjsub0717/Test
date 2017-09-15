@@ -15,6 +15,7 @@ namespace TestProject
     {
         String strConn = "Server=13.124.90.82; Port=3306; Database=rntp; Uid=root; Pwd=rntprntp;";
         DataSet ds = new DataSet();
+        ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs> splash = null;
 
         public product()
         {
@@ -23,7 +24,7 @@ namespace TestProject
             this.TopLevel = false;
 
             comboBox1.SelectedIndex = 0;
-            printList();
+            //printList();
         }
 
         private void listView1_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -53,14 +54,14 @@ namespace TestProject
                     insertCommand.Parameters.AddWithValue("@standard", addProduct.standard);
                     insertCommand.Parameters.AddWithValue("@maker", addProduct.maker);
                     insertCommand.Parameters.AddWithValue("@unit", addProduct.unit);
-                    insertCommand.Parameters.AddWithValue("@kg", addProduct.kg);
-                    insertCommand.Parameters.AddWithValue("@ea", addProduct.ea);
-                    insertCommand.Parameters.AddWithValue("@school_price", addProduct.str_school_price);
-                    insertCommand.Parameters.AddWithValue("@estimate_price", addProduct.str_estimate_price);
-                    insertCommand.Parameters.AddWithValue("@rate_1", addProduct.rate_1);
-                    insertCommand.Parameters.AddWithValue("@rate_2", addProduct.rate_2);
-                    insertCommand.Parameters.AddWithValue("@original_price", addProduct.str_original_price);
-                    insertCommand.Parameters.AddWithValue("@rate_original", addProduct.rate_original);
+                    insertCommand.Parameters.AddWithValue("@kg", addProduct.kg == "" ? null : addProduct.kg);
+                    insertCommand.Parameters.AddWithValue("@ea", addProduct.ea == "" ? null : addProduct.ea);
+                    insertCommand.Parameters.AddWithValue("@school_price", addProduct.str_school_price == "" ? null : addProduct.str_school_price);
+                    insertCommand.Parameters.AddWithValue("@estimate_price", addProduct.str_estimate_price == "" ? null : addProduct.str_estimate_price);
+                    insertCommand.Parameters.AddWithValue("@rate_1", addProduct.rate_1 == "" ? null : addProduct.rate_1);
+                    insertCommand.Parameters.AddWithValue("@rate_2", addProduct.rate_2 == "" ? null : addProduct.rate_2);
+                    insertCommand.Parameters.AddWithValue("@original_price", addProduct.str_original_price == "" ? null : addProduct.str_original_price);
+                    insertCommand.Parameters.AddWithValue("@rate_original", addProduct.rate_original == "" ? null : addProduct.rate_original);
                     insertCommand.Parameters.AddWithValue("@account", addProduct.account);
                     insertCommand.Parameters.AddWithValue("@tax", addProduct.i_tax);
 
@@ -76,6 +77,10 @@ namespace TestProject
 
         private void printList()
         {
+            splash = new ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs>(x => x.ProgressChanged);
+            splash.Show();
+            nowLoading.ProgressChangedEventArgs p = new nowLoading.ProgressChangedEventArgs();
+
             ds.Clear();
             using (MySqlConnection conn = new MySqlConnection(strConn))
             {
@@ -105,6 +110,11 @@ namespace TestProject
                 adpt.Fill(ds);
                 conn.Close();
             }
+            int maxNumber = ds.Tables[0].Rows.Count;
+            int highestPercentageReached = 0;
+
+            int percentComplete = 0;
+            int i = 0;
 
             listView1.Items.Clear();
             foreach (DataRow row in ds.Tables[0].Rows)
@@ -125,8 +135,18 @@ namespace TestProject
                     row["account"].ToString(),
                     row["tax"].Equals(true) ? "과세" : "면세" }));
 
+                percentComplete = (int)((float)i / (float)maxNumber * 100);
+                if (percentComplete > highestPercentageReached)
+                {
+                    p.Progress = percentComplete;
+                    splash.OnProgressChanged(this, p);
+                    highestPercentageReached = percentComplete;
+                    //bw.ReportProgress(percentComplete);
+                }
+                i++;
             }
             ds.Clear();
+            splash.Close();
         }
 
         // 삭제 버튼
@@ -227,6 +247,17 @@ namespace TestProject
                 }
             }
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            newProducts newForm = new newProducts();
+
+            if (newForm.ShowDialog() == DialogResult.OK)
+            {
+                //printList();
+            }
+        }
+
 
 
     }
