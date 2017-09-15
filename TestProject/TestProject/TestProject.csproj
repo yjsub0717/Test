@@ -51,6 +51,18 @@
     <Compile Include="Account.Designer.cs">
       <DependentUpon>Account.cs</DependentUpon>
     </Compile>
+    <Compile Include="delivery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="delivery.Designer.cs">
+      <DependentUpon>delivery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="deliveryList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="deliveryList.Designer.cs">
+      <DependentUpon>deliveryList.cs</DependentUpon>
+    </Compile>
     <Compile Include="estimate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,17 +81,47 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="indirect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="indirect.Designer.cs">
+      <DependentUpon>indirect.cs</DependentUpon>
+    </Compile>
     <Compile Include="newAccount.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="newAccount.Designer.cs">
       <DependentUpon>newAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="newAccounts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="newAccounts.Designer.cs">
+      <DependentUpon>newAccounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="newEstimate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="newEstimate.Designer.cs">
+      <DependentUpon>newEstimate.cs</DependentUpon>
+    </Compile>
     <Compile Include="newProduct.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="newProduct.Designer.cs">
       <DependentUpon>newProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="newProducts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="newProducts.Designer.cs">
+      <DependentUpon>newProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="nowLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="nowLoading.Designer.cs">
+      <DependentUpon>nowLoading.cs</DependentUpon>
     </Compile>
     <Compile Include="product.cs">
       <SubType>Form</SubType>
@@ -95,8 +137,15 @@
     <Compile Include="selectProduct.Designer.cs">
       <DependentUpon>selectProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="ThreadedSplashFormController.cs" />
     <EmbeddedResource Include="Account.resx">
       <DependentUpon>Account.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="delivery.resx">
+      <DependentUpon>delivery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="deliveryList.resx">
+      <DependentUpon>deliveryList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="estimate.resx">
       <DependentUpon>estimate.cs</DependentUpon>
@@ -107,11 +156,26 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="indirect.resx">
+      <DependentUpon>indirect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="newAccount.resx">
       <DependentUpon>newAccount.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="newAccounts.resx">
+      <DependentUpon>newAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="newEstimate.resx">
+      <DependentUpon>newEstimate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="newProduct.resx">
       <DependentUpon>newProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="newProducts.resx">
+      <DependentUpon>newProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="nowLoading.resx">
+      <DependentUpon>nowLoading.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="product.resx">
       <DependentUpon>product.cs</DependentUpon>
