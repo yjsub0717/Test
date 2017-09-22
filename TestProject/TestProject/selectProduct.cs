@@ -16,6 +16,7 @@ namespace TestProject
         String strConn = "Server=13.124.90.82; Port=3306; Database=rntp; Uid=root; Pwd=rntprntp;";
         DataSet ds = new DataSet();
 
+        public string id = null;
         public string name = null;
         public string standard = null;
         public string maker = null;
@@ -102,6 +103,7 @@ namespace TestProject
             {
                 ListView.SelectedListViewItemCollection items = listView1.SelectedItems;
                 ListViewItem lvItem = items[0];
+                id = lvItem.SubItems[0].Text;
                 name = lvItem.SubItems[1].Text;
                 standard = lvItem.SubItems[2].Text;
                 maker = lvItem.SubItems[3].Text;

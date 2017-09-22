@@ -272,8 +272,6 @@ namespace TestProject
                         insertCommand.CommandText = "INSERT INTO estimateList(account, date, bid, base) VALUES(@account, @date, @bid, @base)";
                         insertCommand.Parameters.AddWithValue("@account", this.name);
                         insertCommand.Parameters.AddWithValue("@date", this.date);
-                        insertCommand.Parameters.AddWithValue("@bid", textBox3.Text == "" ? null : textBox3.Text.Replace(",", ""));
-                        insertCommand.Parameters.AddWithValue("@base", textBox4.Text == "" ? null : textBox4.Text.Replace(",", ""));
 
                         insertCommand.ExecuteNonQuery();
 

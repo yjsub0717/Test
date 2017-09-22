@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.TxtEdit = new System.Windows.Forms.TextBox();
@@ -45,10 +47,7 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button6 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -67,21 +66,20 @@
             this.panel1.Location = new System.Drawing.Point(1, 1);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1486, 48);
+            this.panel1.Size = new System.Drawing.Size(1698, 60);
             this.panel1.TabIndex = 4;
             // 
-            // button5
+            // button6
             // 
-            this.button5.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button5.Location = new System.Drawing.Point(11, 9);
-            this.button5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(122, 32);
-            this.button5.TabIndex = 4;
-            this.button5.TabStop = false;
-            this.button5.Text = "항목 삭제";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.button6.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.button6.Location = new System.Drawing.Point(451, 11);
+            this.button6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(139, 40);
+            this.button6.TabIndex = 4;
+            this.button6.TabStop = false;
+            this.button6.Text = "삭 제";
+            this.button6.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
@@ -89,22 +87,35 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Cursor = System.Windows.Forms.Cursors.Default;
             this.button4.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button4.Location = new System.Drawing.Point(1356, 9);
+            this.button4.Location = new System.Drawing.Point(1550, 11);
             this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(122, 32);
+            this.button4.Size = new System.Drawing.Size(139, 40);
             this.button4.TabIndex = 3;
             this.button4.TabStop = false;
             this.button4.Text = "인 쇄";
             this.button4.UseVisualStyleBackColor = true;
             // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.button12.Location = new System.Drawing.Point(13, 11);
+            this.button12.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(139, 40);
+            this.button12.TabIndex = 0;
+            this.button12.TabStop = false;
+            this.button12.Text = "신 규";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button3.Location = new System.Drawing.Point(267, 9);
+            this.button3.Location = new System.Drawing.Point(305, 11);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(122, 32);
+            this.button3.Size = new System.Drawing.Size(139, 40);
             this.button3.TabIndex = 2;
             this.button3.TabStop = false;
             this.button3.Text = "저 장";
@@ -115,23 +126,36 @@
             // 
             this.button2.Cursor = System.Windows.Forms.Cursors.Default;
             this.button2.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button2.Location = new System.Drawing.Point(139, 9);
+            this.button2.Location = new System.Drawing.Point(159, 11);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(122, 32);
+            this.button2.Size = new System.Drawing.Size(139, 40);
             this.button2.TabIndex = 1;
             this.button2.TabStop = false;
             this.button2.Text = "불러오기";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.button5.Location = new System.Drawing.Point(13, 11);
+            this.button5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(139, 40);
+            this.button5.TabIndex = 4;
+            this.button5.TabStop = false;
+            this.button5.Text = "항목 삭제";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button1.Location = new System.Drawing.Point(139, 9);
+            this.button1.Location = new System.Drawing.Point(159, 11);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(122, 32);
+            this.button1.Size = new System.Drawing.Size(139, 40);
             this.button1.TabIndex = 0;
             this.button1.TabStop = false;
             this.button1.Text = "항목 추가";
@@ -145,18 +169,19 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.Controls.Add(this.TxtEdit);
             this.panel3.Controls.Add(this.listView1);
-            this.panel3.Location = new System.Drawing.Point(1, 101);
+            this.panel3.Location = new System.Drawing.Point(1, 126);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1489, 561);
+            this.panel3.Size = new System.Drawing.Size(1702, 701);
             this.panel3.TabIndex = 7;
             // 
             // TxtEdit
             // 
             this.TxtEdit.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.TxtEdit.Location = new System.Drawing.Point(419, 50);
+            this.TxtEdit.Location = new System.Drawing.Point(479, 62);
+            this.TxtEdit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.TxtEdit.Name = "TxtEdit";
-            this.TxtEdit.Size = new System.Drawing.Size(100, 29);
+            this.TxtEdit.Size = new System.Drawing.Size(114, 34);
             this.TxtEdit.TabIndex = 6;
             this.TxtEdit.Visible = false;
             this.TxtEdit.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtEdit_KeyUp);
@@ -185,7 +210,7 @@
             this.listView1.Margin = new System.Windows.Forms.Padding(0);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1486, 557);
+            this.listView1.Size = new System.Drawing.Size(1698, 695);
             this.listView1.TabIndex = 0;
             this.listView1.TabStop = false;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -241,70 +266,30 @@
             this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader2.Width = 150;
             // 
-            // button6
-            // 
-            this.button6.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button6.Location = new System.Drawing.Point(395, 9);
-            this.button6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(122, 32);
-            this.button6.TabIndex = 4;
-            this.button6.TabStop = false;
-            this.button6.Text = "삭 제";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(212)))), ((int)(((byte)(244)))));
-            this.panel2.Controls.Add(this.button9);
             this.panel2.Controls.Add(this.button5);
             this.panel2.Controls.Add(this.button1);
-            this.panel2.Location = new System.Drawing.Point(1, 51);
+            this.panel2.Location = new System.Drawing.Point(1, 64);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1486, 48);
+            this.panel2.Size = new System.Drawing.Size(1698, 60);
             this.panel2.TabIndex = 5;
-            // 
-            // button9
-            // 
-            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button9.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button9.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button9.Location = new System.Drawing.Point(1356, 9);
-            this.button9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(122, 32);
-            this.button9.TabIndex = 3;
-            this.button9.TabStop = false;
-            this.button9.Text = "인 쇄";
-            this.button9.UseVisualStyleBackColor = true;
-            // 
-            // button12
-            // 
-            this.button12.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button12.Location = new System.Drawing.Point(11, 9);
-            this.button12.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(122, 32);
-            this.button12.TabIndex = 0;
-            this.button12.TabStop = false;
-            this.button12.Text = "신 규";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // indirect
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1491, 664);
+            this.ClientSize = new System.Drawing.Size(1704, 830);
             this.ControlBox = false;
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "indirect";
             this.Text = "indirect";
             this.panel1.ResumeLayout(false);
@@ -337,6 +322,5 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button9;
     }
 }

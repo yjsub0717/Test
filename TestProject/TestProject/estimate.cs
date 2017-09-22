@@ -104,21 +104,22 @@ namespace TestProject
                         for (int r = 2; r <= data.GetLength(0); r++)
                         {
                             listView1.Items.Add(new ListViewItem(new string[] {
-                            data[r, 1] == null ? "" : data[r, 1].ToString(), 
-                            "",
-                            "",
-                            "",
-                            "",
-                            data[r, 5] == null ? "" : data[r, 5].ToString(), 
-                            "",
-                            "",
-                            "",
-                            "",
-                            data[r, 2] == null ? "" : data[r, 2].ToString(), 
-                            data[r, 3] == null ? "" : data[r, 3].ToString(), 
-                            data[r, 4] == null ? "" : data[r, 4].ToString(), 
-                            data[r, 5] == null ? "" : data[r, 5].ToString(), 
-                            data[r, 6] == null ? "" : data[r, 6].ToString() }));
+                                "",
+                                data[r, 1] == null ? "" : data[r, 1].ToString(), 
+                                "",
+                                "",
+                                "",
+                                "",
+                                data[r, 5] == null ? "" : data[r, 5].ToString(), 
+                                "",
+                                "",
+                                "",
+                                "",
+                                data[r, 2] == null ? "" : data[r, 2].ToString(), 
+                                data[r, 3] == null ? "" : data[r, 3].ToString(), 
+                                data[r, 4] == null ? "" : data[r, 4].ToString(), 
+                                data[r, 5] == null ? "" : data[r, 5].ToString(), 
+                                data[r, 6] == null ? "" : data[r, 6].ToString() }));
 
                             //for (int c = 1; c <= data.GetLength(1); c++)
                             //{
@@ -199,14 +200,14 @@ namespace TestProject
 
                                     if (ds.Tables[0].Rows.Count == 1)
                                     {
-                                        item.SubItems[1].Text = ds.Tables[0].Rows[0]["product_name"].ToString();
-                                        item.SubItems[2].Text = ds.Tables[0].Rows[0]["maker"].ToString();
-                                        item.SubItems[3].Text = ds.Tables[0].Rows[0]["standard"].ToString();
-                                        item.SubItems[4].Text = ds.Tables[0].Rows[0]["unit"].ToString();
-                                        item.SubItems[6].Text = ds.Tables[0].Rows[0]["original_price"].ToString();
-                                        item.SubItems[7].Text = ds.Tables[0].Rows[0]["estimate_price"].ToString();
-                                        item.SubItems[8].Text = ds.Tables[0].Rows[0]["school_price"].ToString();
-                                        item.SubItems[9].Text = ds.Tables[0].Rows[0]["total_price"].ToString();
+                                        item.SubItems[2].Text = ds.Tables[0].Rows[0]["product_name"].ToString();
+                                        item.SubItems[3].Text = ds.Tables[0].Rows[0]["maker"].ToString();
+                                        item.SubItems[4].Text = ds.Tables[0].Rows[0]["standard"].ToString();
+                                        item.SubItems[5].Text = ds.Tables[0].Rows[0]["unit"].ToString();
+                                        item.SubItems[7].Text = ds.Tables[0].Rows[0]["original_price"].ToString();
+                                        item.SubItems[8].Text = ds.Tables[0].Rows[0]["estimate_price"].ToString();
+                                        item.SubItems[9].Text = ds.Tables[0].Rows[0]["school_price"].ToString();
+                                        item.SubItems[10].Text = ds.Tables[0].Rows[0]["total_price"].ToString();
                                     }
                                 }
 
@@ -232,7 +233,7 @@ namespace TestProject
             {
                 ListView.SelectedListViewItemCollection items = listView1.SelectedItems;
                 ListViewItem lvItem = items[0];
-                string name = lvItem.SubItems[1].Text != "" ? lvItem.SubItems[1].Text : lvItem.SubItems[10].Text;
+                string name = lvItem.SubItems[2].Text != "" ? lvItem.SubItems[2].Text : lvItem.SubItems[11].Text;
 
                 selectProduct newForm = new selectProduct();
 
@@ -240,15 +241,16 @@ namespace TestProject
 
                 if(newForm.ShowDialog() == DialogResult.OK)
                 {
-                    lvItem.SubItems[1].Text = newForm.name;
-                    lvItem.SubItems[2].Text = newForm.maker;
-                    lvItem.SubItems[3].Text = newForm.standard;
-                    lvItem.SubItems[4].Text = newForm.unit;
-                    lvItem.SubItems[6].Text = textTrans(newForm.str_original_price);
-                    lvItem.SubItems[7].Text = textTrans(newForm.str_estimate_price);
-                    lvItem.SubItems[8].Text = textTrans(newForm.str_school_price);
+                    lvItem.SubItems[0].Text = newForm.id;
+                    lvItem.SubItems[2].Text = newForm.name;
+                    lvItem.SubItems[3].Text = newForm.maker;
+                    lvItem.SubItems[4].Text = newForm.standard;
+                    lvItem.SubItems[5].Text = newForm.unit;
+                    lvItem.SubItems[7].Text = textTrans(newForm.str_original_price);
+                    lvItem.SubItems[8].Text = textTrans(newForm.str_estimate_price);
+                    lvItem.SubItems[9].Text = textTrans(newForm.str_school_price);
 
-                    lvItem.SubItems[9].Text = textTrans((double.Parse(lvItem.SubItems[5].Text.Replace(",", "")) * Int32.Parse(lvItem.SubItems[8].Text.Replace(",", ""))).ToString());
+                    lvItem.SubItems[10].Text = textTrans((double.Parse(lvItem.SubItems[6].Text.Replace(",", "")) * Int32.Parse(lvItem.SubItems[9].Text.Replace(",", ""))).ToString());
                     calculateTotal();
                 }
             }
@@ -291,35 +293,37 @@ namespace TestProject
                         {
                             MySqlCommand insertCommand = new MySqlCommand();
                             insertCommand.Connection = conn;
-                            sql = "UPDATE estimateItem set product_name = '" + item.SubItems[1].Text +
-                            "', maker = ' " + item.SubItems[2].Text +
-                            "', standard = '" + item.SubItems[3].Text +
-                            "', unit = '" + item.SubItems[4].Text;
+                            sql = "UPDATE estimateItem set";// product_id = '" + item.SubItems[0].Text;  // +
 
-                            if (item.SubItems[5].Text.Equals(""))
-                                sql += "', total = null";
+                            if (item.SubItems[0].Text.Equals(""))
+                                sql += " product_id = null";
                             else
-                                sql += "', total = " + float.Parse(item.SubItems[5].Text);
+                                sql += " product_id = " + Int32.Parse(item.SubItems[0].Text);
 
                             if (item.SubItems[6].Text.Equals(""))
-                                sql += ", original_price = null";
+                                sql += ", total = null";
                             else
-                                sql += ", original_price = " + float.Parse(item.SubItems[6].Text);
+                                sql += ", total = " + float.Parse(item.SubItems[6].Text);
 
                             if (item.SubItems[7].Text.Equals(""))
-                                sql += ", estimate_price = null";
+                                sql += ", original_price = null";
                             else
-                                sql += ", estimate_price = " + float.Parse(item.SubItems[7].Text);
+                                sql += ", original_price = " + float.Parse(item.SubItems[7].Text);
 
                             if (item.SubItems[8].Text.Equals(""))
-                                sql += ", school_price = null";
+                                sql += ", estimate_price = null";
                             else
-                                sql += ", school_price = " + float.Parse(item.SubItems[8].Text);
+                                sql += ", estimate_price = " + float.Parse(item.SubItems[8].Text);
 
                             if (item.SubItems[9].Text.Equals(""))
+                                sql += ", school_price = null";
+                            else
+                                sql += ", school_price = " + float.Parse(item.SubItems[9].Text);
+
+                            if (item.SubItems[10].Text.Equals(""))
                                 sql += ", total_price = null";
                             else
-                                sql += ", total_price = " + float.Parse(item.SubItems[9].Text);
+                                sql += ", total_price = " + float.Parse(item.SubItems[10].Text);
 
                             //if (item.SubItems[10].Text.Equals(""))
                             //    sql += ", base_price = null";
@@ -336,17 +340,17 @@ namespace TestProject
                             //else
                             //    sql += ", rate_bid = " + float.Parse(item.SubItems[12].Text);
 
-                            sql += ", name_excel = '" + item.SubItems[10].Text +
-                            "', standard_excel = '" + item.SubItems[11].Text +
-                            "', unit_excel = '" + item.SubItems[12].Text;
+                            sql += ", name_excel = '" + item.SubItems[11].Text +
+                            "', standard_excel = '" + item.SubItems[12].Text +
+                            "', unit_excel = '" + item.SubItems[13].Text;
 
-                            if (item.SubItems[13].Text.Equals(""))
+                            if (item.SubItems[14].Text.Equals(""))
                                 sql += "', total_excel = null";
                             else
-                                sql += "', total_excel = " + float.Parse(item.SubItems[13].Text);
+                                sql += "', total_excel = " + float.Parse(item.SubItems[14].Text);
 
-                            sql += ", text_excel = '" + item.SubItems[14].Text +
-                            "' where estimate_id=" + id + " AND no = " + item.SubItems[0].Text;
+                            sql += ", text_excel = '" + item.SubItems[15].Text +
+                            "' where estimate_id=" + id + " AND no = " + item.SubItems[1].Text;
 
                             insertCommand.CommandText = sql;
                             insertCommand.ExecuteNonQuery();
@@ -381,36 +385,40 @@ namespace TestProject
                         {
                             insertCommand = new MySqlCommand();
                             insertCommand.Connection = conn;
-                            insertCommand.CommandText = "INSERT INTO estimateItem(estimate_id, no, product_name, maker, standard, unit, total, original_price, estimate_price, school_price, total_price, name_excel, standard_excel, unit_excel, total_excel, text_excel) VALUES(@estimate_id, @no, @product_name, @maker, @standard, @unit, @total, @original_price, @estimate_price, @school_price, @total_price, @name_excel, @standard_excel, @unit_excel, @total_excel, @text_excel)";
+                            insertCommand.CommandText = "INSERT INTO estimateItem(estimate_id, no, product_id, total, original_price, estimate_price, school_price, total_price, name_excel, standard_excel, unit_excel, total_excel, text_excel) VALUES(@estimate_id, @no, @product_id, @total, @original_price, @estimate_price, @school_price, @total_price, @name_excel, @standard_excel, @unit_excel, @total_excel, @text_excel)";
                             insertCommand.Parameters.AddWithValue("@estimate_id", id);
-                            insertCommand.Parameters.AddWithValue("@no", Int32.Parse(item.SubItems[0].Text));
-                            insertCommand.Parameters.AddWithValue("@product_name", item.SubItems[1].Text);
-                            insertCommand.Parameters.AddWithValue("@maker", item.SubItems[2].Text);
-                            insertCommand.Parameters.AddWithValue("@standard", item.SubItems[3].Text);
-                            insertCommand.Parameters.AddWithValue("@unit", item.SubItems[4].Text);
-                            if (item.SubItems[5].Text.Equals(""))
+                            insertCommand.Parameters.AddWithValue("@no", Int32.Parse(item.SubItems[1].Text));
+
+                            if (item.SubItems[0].Text.Equals(""))
+                                insertCommand.Parameters.AddWithValue("@product_id", null);
+                            else
+                                insertCommand.Parameters.AddWithValue("@product_id", Int32.Parse(item.SubItems[0].Text));
+                            //insertCommand.Parameters.AddWithValue("@maker", item.SubItems[3].Text);
+                            //insertCommand.Parameters.AddWithValue("@standard", item.SubItems[4].Text);
+                            //insertCommand.Parameters.AddWithValue("@unit", item.SubItems[5].Text);
+                            if (item.SubItems[6].Text.Equals(""))
                                 insertCommand.Parameters.AddWithValue("@total", null);
                             else
-                                insertCommand.Parameters.AddWithValue("@total", float.Parse(item.SubItems[5].Text));
-
-                            if (item.SubItems[6].Text.Equals(""))
-                                insertCommand.Parameters.AddWithValue("@original_price", null);
-                            else
-                                insertCommand.Parameters.AddWithValue("@original_price", float.Parse(item.SubItems[6].Text));
+                                insertCommand.Parameters.AddWithValue("@total", float.Parse(item.SubItems[6].Text));
 
                             if (item.SubItems[7].Text.Equals(""))
-                                insertCommand.Parameters.AddWithValue("@estimate_price", null);
+                                insertCommand.Parameters.AddWithValue("@original_price", null);
                             else
-                                insertCommand.Parameters.AddWithValue("@estimate_price", float.Parse(item.SubItems[7].Text));
+                                insertCommand.Parameters.AddWithValue("@original_price", float.Parse(item.SubItems[7].Text));
 
                             if (item.SubItems[8].Text.Equals(""))
+                                insertCommand.Parameters.AddWithValue("@estimate_price", null);
+                            else
+                                insertCommand.Parameters.AddWithValue("@estimate_price", float.Parse(item.SubItems[8].Text));
+
+                            if (item.SubItems[9].Text.Equals(""))
                                 insertCommand.Parameters.AddWithValue("@school_price", null);
                             else
-                                insertCommand.Parameters.AddWithValue("@school_price", float.Parse(item.SubItems[8].Text));
-                            if (item.SubItems[9].Text.Equals(""))
+                                insertCommand.Parameters.AddWithValue("@school_price", float.Parse(item.SubItems[9].Text));
+                            if (item.SubItems[10].Text.Equals(""))
                                 insertCommand.Parameters.AddWithValue("@total_price", null);
                             else
-                                insertCommand.Parameters.AddWithValue("@total_price", float.Parse(item.SubItems[9].Text));
+                                insertCommand.Parameters.AddWithValue("@total_price", float.Parse(item.SubItems[10].Text));
                             //if (item.SubItems[10].Text.Equals(""))
                             //    insertCommand.Parameters.AddWithValue("@base_price", null);
                             //else
@@ -423,14 +431,14 @@ namespace TestProject
                             //    insertCommand.Parameters.AddWithValue("@rate_bid", null);
                             //else
                             //    insertCommand.Parameters.AddWithValue("@rate_bid", float.Parse(item.SubItems[12].Text));
-                            insertCommand.Parameters.AddWithValue("@name_excel", item.SubItems[10].Text);
-                            insertCommand.Parameters.AddWithValue("@standard_excel", item.SubItems[11].Text);
-                            insertCommand.Parameters.AddWithValue("@unit_excel", item.SubItems[12].Text);
-                            if (item.SubItems[13].Text.Equals(""))
+                            insertCommand.Parameters.AddWithValue("@name_excel", item.SubItems[11].Text);
+                            insertCommand.Parameters.AddWithValue("@standard_excel", item.SubItems[12].Text);
+                            insertCommand.Parameters.AddWithValue("@unit_excel", item.SubItems[13].Text);
+                            if (item.SubItems[14].Text.Equals(""))
                                 insertCommand.Parameters.AddWithValue("@total_excel", null);
                             else
-                                insertCommand.Parameters.AddWithValue("@total_excel", float.Parse(item.SubItems[13].Text));
-                            insertCommand.Parameters.AddWithValue("@text_excel", item.SubItems[14].Text);
+                                insertCommand.Parameters.AddWithValue("@total_excel", float.Parse(item.SubItems[14].Text));
+                            insertCommand.Parameters.AddWithValue("@text_excel", item.SubItems[15].Text);
 
                             insertCommand.ExecuteNonQuery();
                         }
@@ -481,30 +489,58 @@ namespace TestProject
                     ds.Clear();
                     adpt = new MySqlDataAdapter(sql, conn);
                     adpt.Fill(ds);
-
+                    // AND product_id = (SELECT estimateItem.product_id FROM 'estimateItem' WHERE estimateItem.estimate_id = 22)
                     foreach (DataRow row in ds.Tables[0].Rows)
                     {
-                        listView1.Items.Add(new ListViewItem(new string[] {
-                        row["no"].ToString(), 
-                        row["product_name"].ToString(),
-                        row["maker"].ToString(),
-                        row["standard"].ToString(),
-                        row["unit"].ToString(),
-                        row["total"].ToString(),
-                        row["original_price"].ToString(),
-                        row["estimate_price"].ToString(),
-                        row["school_price"].ToString(),
-                        row["total_price"].ToString(),
-                        row["name_excel"].ToString(),
-                        row["standard_excel"].ToString(),
-                        row["unit_excel"].ToString(),
-                        row["total_excel"].ToString(),
-                        row["text_excel"].ToString() }));
-
+                        if (row["product_id"].ToString() != "")
+                        {
+                            DataSet tempDs = new DataSet();
+                            MySqlDataAdapter tempAdpt = new MySqlDataAdapter("SELECT name, maker, standard, unit FROM `product` WHERE id = " + row["product_id"].ToString(), conn);
+                            tempAdpt.Fill(tempDs); 
+                            
+                            listView1.Items.Add(new ListViewItem(new string[] {
+                                row["product_id"].ToString(),
+                                row["no"].ToString(), 
+                                tempDs.Tables[0].Rows[0]["name"].ToString(),
+                                tempDs.Tables[0].Rows[0]["maker"].ToString(),
+                                tempDs.Tables[0].Rows[0]["standard"].ToString(),
+                                tempDs.Tables[0].Rows[0]["unit"].ToString(),
+                                textTrans(row["total"].ToString()),
+                                textTrans(row["original_price"].ToString()),
+                                textTrans(row["estimate_price"].ToString()),
+                                textTrans(row["school_price"].ToString()),
+                                textTrans(row["total_price"].ToString()),
+                                row["name_excel"].ToString(),
+                                row["standard_excel"].ToString(),
+                                row["unit_excel"].ToString(),
+                                row["total_excel"].ToString(),
+                                row["text_excel"].ToString() }));
+                        }
+                        else
+                        {
+                            listView1.Items.Add(new ListViewItem(new string[] {
+                                "",
+                                row["no"].ToString(), 
+                                "",
+                                "",
+                                "",
+                                "",
+                                textTrans(row["total"].ToString()),
+                                textTrans(row["original_price"].ToString()),
+                                textTrans(row["estimate_price"].ToString()),
+                                textTrans(row["school_price"].ToString()),
+                                textTrans(row["total_price"].ToString()),
+                                row["name_excel"].ToString(),
+                                row["standard_excel"].ToString(),
+                                row["unit_excel"].ToString(),
+                                row["total_excel"].ToString(),
+                                row["text_excel"].ToString() }));
+                        }
                     }
 
                     conn.Close();
                 }
+                calculateTotal();
                 listView1.Focus();
             }
         }
@@ -647,11 +683,11 @@ namespace TestProject
 
             foreach (ListViewItem item in listView1.Items)
             {
-                if (item.SubItems[7].Text != "")
-                    total += (int)(Convert.ToInt32(item.SubItems[7].Text.Replace(",", "")) * float.Parse(item.SubItems[5].Text));
-
                 if (item.SubItems[8].Text != "")
-                    total2 += (int)(Convert.ToInt32(item.SubItems[8].Text.Replace(",", "")) * float.Parse(item.SubItems[5].Text));
+                    total += (int)(Convert.ToInt32(item.SubItems[8].Text.Replace(",", "")) * float.Parse(item.SubItems[6].Text));
+
+                if (item.SubItems[9].Text != "")
+                    total2 += (int)(Convert.ToInt32(item.SubItems[9].Text.Replace(",", "")) * float.Parse(item.SubItems[6].Text));
             }
             textBox1.Text = String.Format("{0:#,###}", total);
             textBox2.Text = String.Format("{0:#,###}", total2);
@@ -706,7 +742,7 @@ namespace TestProject
         {
             ListViewHitTestInfo i = listView1.HitTest(e.X, e.Y);
             if (i.SubItem == null) return;
-            if (i.SubItem == i.Item.SubItems[8] && i.Item.SubItems[1].Text != "")
+            if (i.SubItem == i.Item.SubItems[9] && i.Item.SubItems[2].Text != "")
             {
                 SelectedLSI = i.SubItem;
                 if (SelectedLSI == null)
@@ -729,7 +765,7 @@ namespace TestProject
                 int CellTop = listView1.Top + i.SubItem.Bounds.Top;
                 //int CellTop = SelectedLSI.Bounds.Top;
                 // First Column
-                if (i.SubItem == i.Item.SubItems[0])
+                if (i.SubItem == i.Item.SubItems[1])
                     CellWidth = listView1.Columns[0].Width;
 
                     TxtEdit.Location = new Point(CellLeft, CellTop);
