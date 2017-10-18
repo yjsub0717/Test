@@ -119,14 +119,14 @@ namespace TestProject
             maker = textBox2.Text;
             standard = textBox3.Text;
             unit = textBox4.Text;
-            ea = textBox5.Text;
-            kg = textBox6.Text;
-            str_estimate_price = textBox7.Text;
-            str_school_price = textBox8.Text;
-            rate_2 = textBox9.Text;
-            rate_1 = textBox10.Text;
-            str_original_price = textBox11.Text;
-            rate_original = textBox12.Text;
+            ea = textBox5.Text == "" ? "null" : textBox5.Text;
+            kg = textBox6.Text == "" ? "null" : textBox6.Text;
+            str_estimate_price = textBox7.Text == "" ? "null" : textBox7.Text;
+            str_school_price = textBox8.Text == "" ? "null" : textBox8.Text;
+            rate_2 = textBox9.Text == "" ? "null" : textBox9.Text;
+            rate_1 = textBox10.Text == "" ? "null" : textBox10.Text;
+            str_original_price = textBox11.Text == "" ? "null" : textBox11.Text;
+            rate_original = textBox12.Text == "" ? "null" : textBox11.Text;
             account = textBox13.Text;
             i_tax = tax ? 1 : 0;
         }

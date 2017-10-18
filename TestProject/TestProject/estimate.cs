@@ -163,7 +163,7 @@ namespace TestProject
                     int percentComplete = 0;
                     int i = 0;
 
-                     using (MySqlConnection conn = new MySqlConnection(strConn))
+                    using (MySqlConnection conn = new MySqlConnection(strConn))
                     {
                         try
                         {
@@ -216,6 +216,7 @@ namespace TestProject
                         catch (Exception eee)
                         {
                             MessageBox.Show("저장에 실패하였습니다.");
+                            splash.Close();
                         }
 
                         conn.Close();
@@ -264,7 +265,15 @@ namespace TestProject
                 try
                 {
                     conn.Open();
+                    splash = new ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs>(x => x.ProgressChanged);
+                    splash.Show();
+                    nowLoading.ProgressChangedEventArgs p = new nowLoading.ProgressChangedEventArgs();
 
+                    int maxNumber = listView1.Items.Count;
+                    int highestPercentageReached = 0;
+
+                    int percentComplete = 0;
+                    int i = 0;
 
                     string sql = "SELECT * FROM `estimateList` WHERE account = '" + this.name + "' AND date = '" + this.date + "'";
 
@@ -281,7 +290,7 @@ namespace TestProject
                         MySqlCommand insertCommand2 = new MySqlCommand();
                         insertCommand2.Connection = conn;
                         sql = "UPDATE estimateList set account = '" + this.name +
-                            "', date = ' " + this.date +
+                            "', date = '" + this.date +
                             "', bid = " + (textBox3.Text == "" ? "null" : textBox3.Text.Replace(",", "")) +
                             ", base = " + (textBox4.Text == "" ? "null" : textBox4.Text.Replace(",", "")) +
                             " where id=" + id;
@@ -291,6 +300,16 @@ namespace TestProject
 
                         foreach (ListViewItem item in listView1.Items)
                         {
+                            percentComplete = (int)((float)i / (float)maxNumber * 100);
+                            if (percentComplete > highestPercentageReached)
+                            {
+                                p.Progress = percentComplete;
+                                splash.OnProgressChanged(this, p);
+                                highestPercentageReached = percentComplete;
+                                //bw.ReportProgress(percentComplete);
+                            }
+                            i++;
+
                             MySqlCommand insertCommand = new MySqlCommand();
                             insertCommand.Connection = conn;
                             sql = "UPDATE estimateItem set";// product_id = '" + item.SubItems[0].Text;  // +
@@ -383,6 +402,16 @@ namespace TestProject
 
                         foreach (ListViewItem item in listView1.Items)
                         {
+                            percentComplete = (int)((float)i / (float)maxNumber * 100);
+                            if (percentComplete > highestPercentageReached)
+                            {
+                                p.Progress = percentComplete;
+                                splash.OnProgressChanged(this, p);
+                                highestPercentageReached = percentComplete;
+                                //bw.ReportProgress(percentComplete);
+                            }
+                            i++;
+
                             insertCommand = new MySqlCommand();
                             insertCommand.Connection = conn;
                             insertCommand.CommandText = "INSERT INTO estimateItem(estimate_id, no, product_id, total, original_price, estimate_price, school_price, total_price, name_excel, standard_excel, unit_excel, total_excel, text_excel) VALUES(@estimate_id, @no, @product_id, @total, @original_price, @estimate_price, @school_price, @total_price, @name_excel, @standard_excel, @unit_excel, @total_excel, @text_excel)";
@@ -444,11 +473,13 @@ namespace TestProject
                         }
                     }
 
-                    MessageBox.Show("성공적으로 저장되었습니다.");
+                    splash.Close();
+                    //MessageBox.Show("저장 완료");
                 }
                 catch (Exception eee)
                 {
-                    MessageBox.Show("저장에 실패하였습니다.");
+                    splash.Close();
+                    new alarm("저장에 실패하였습니다.", false).ShowDialog();
                 }
 
                 conn.Close();
@@ -459,7 +490,7 @@ namespace TestProject
         private void button2_Click(object sender, EventArgs e)
         {
             listView1.Items.Clear();
-            estimate_list newForm = new estimate_list();
+            estimate_list newForm = new estimate_list(true);
 
             if(newForm.ShowDialog() == DialogResult.OK)
             {
@@ -547,26 +578,35 @@ namespace TestProject
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("견적서가 삭제됩니다.\r계속 하시겠습니까?", "견적서 삭제", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (new alarm("견적서가 삭제됩니다. 계속 하시겠습니까?", true).ShowDialog() == DialogResult.OK)
             {
-                string sql = "DELETE FROM `estimateList` WHERE account = '" + this.name + "' AND date = '" + this.date + "'";
-
                 using (MySqlConnection conn = new MySqlConnection(strConn))
                 {
                     conn.Open();
+                    DataSet tempDs = new DataSet();
+                    MySqlDataAdapter tempAdpt = new MySqlDataAdapter("SELECT morning, launch, dinner FROM `estimateList` WHERE account = '" + this.name + "' AND date = '" + this.date + "'", conn);
+                    tempAdpt.Fill(tempDs);
+                    //ds.Tables[0].Rows[0]["morning"].ToString() != "" , ds.Tables[0].Rows[0]["launch"].ToString() != "", ds.Tables[0].Rows[0]["dinner"].ToString() != ""
+                    if ((tempDs.Tables[0].Rows[0]["morning"].ToString() != "" || tempDs.Tables[0].Rows[0]["launch"].ToString() != "") || tempDs.Tables[0].Rows[0]["dinner"].ToString() != "")
+                    {
+                        new alarm("견적서와 연결된 납품지시서가 존재합니다.", false).ShowDialog();
+                    }
+                    else
+                    {
+                        string sql = "DELETE FROM `estimateList` WHERE account = '" + this.name + "' AND date = '" + this.date + "'";
 
-                    MySqlCommand insertCommand = new MySqlCommand();
-                    insertCommand.Connection = conn;
-                    insertCommand.CommandText = sql;
+                        MySqlCommand insertCommand = new MySqlCommand();
+                        insertCommand.Connection = conn;
+                        insertCommand.CommandText = sql;
 
-                    insertCommand.ExecuteNonQuery();
+                        insertCommand.ExecuteNonQuery();
 
-                    conn.Close();
-                    listView1.Items.Clear();
-                    this.name = null;
-                    this.date = null;
-
+                        listView1.Items.Clear();
+                        this.name = null;
+                        this.date = null;
+                    }
                     //listView1.Items.Remove(selectedItem);
+                    conn.Close();
                 }
             }
         }
@@ -787,6 +827,69 @@ namespace TestProject
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
                 HideTextEditor();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            checkDelivery newForm = new checkDelivery(name, date);
+            newForm.Show();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            //for (int i = 0; i < listView1.Columns.Count; i++)
+            //{
+            //    Console.WriteLine(listView1.Columns[i].Text);
+            //}
+
+            selectHeader newForm = new selectHeader();
+
+            if (newForm.ShowDialog() == DialogResult.OK)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+
+                sfd.InitialDirectory = @"C:\";
+                sfd.Title = "Save file";
+
+                sfd.CreatePrompt = true;
+                sfd.OverwritePrompt = true;
+
+                sfd.DefaultExt = "*.xls";
+                sfd.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm|All files|*.*";
+                sfd.FileName = this.name + "_" + this.date;
+
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    //try
+                    //{
+                    //    object missingType = Type.Missing;
+                    //    Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                    //    Microsoft.Office.Interop.Excel.Workbook excelBook = excelApp.Workbooks.Add(missingType);
+                    //    Microsoft.Office.Interop.Excel.Worksheet excelWorksheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets.Add(missingType, missingType, missingType, missingType);
+                    //    excelApp.Visible = false;
+
+                    //    for (int i = 0; i < lstView.Items.Count; i++)
+                    //    {
+                    //        for (int j = 0; j < lstView.Columns.Count; j++)
+                    //        {
+                    //            if (i == 0)
+                    //            {
+                    //                excelWorksheet.Cells[1, j + 1] = this.lstView.Columns[j].Text;
+                    //            }
+                    //            excelWorksheet.Cells[i + 2, j + 1] = this.lstView.Items[i].SubItems[j].Text;
+                    //        }
+                    //    }
+                    //    excelBook.SaveAs(@saveFileDialog1.FileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal, missingType, missingType, missingType, missingType, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, missingType, missingType, missingType, missingType, missingType);
+                    //    excelApp.Visible = true;
+                    //    System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
+                    //}
+                    //catch
+                    //{
+                    //    MessageBox.Show("Excel 파일 저장중 에러가 발생했습니다.");
+                    //}
+                }
+            }
         }
     }
 }

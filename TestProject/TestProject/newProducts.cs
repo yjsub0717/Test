@@ -125,6 +125,7 @@ namespace TestProject
                     splash.Close();
                     wb.Close(true);
                     excelApp.Quit();
+                    listView1.Focus();
                 }
                 finally
                 {

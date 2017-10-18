@@ -17,7 +17,7 @@ namespace TestProject
         private int sortColumn = -1;
         String strConn = "Server=13.124.90.82; Port=3306; Database=rntp; Uid=root; Pwd=rntprntp;";
         DataSet ds = new DataSet();
-        private String[] listview_columnTitle = { "", "거래처명", "전화번호", "휴대전화", "팩스", "사업자상호", "사업자번호", "주소" };
+        private String[] listview_columnTitle;
         ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs> splash = null;
 
         public Account()
@@ -27,6 +27,13 @@ namespace TestProject
             this.TopLevel = false;
             comboBox1.SelectedIndex = 0;;
             printList();
+
+            listview_columnTitle = new String[listView1.Columns.Count];
+
+            for (int i = 0; i < listView1.Columns.Count; i++)
+            {
+                listview_columnTitle[i] = listView1.Columns[i].Text;
+            }
         }
 
         private void listView1_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -84,27 +91,56 @@ namespace TestProject
                 sortColumn = e.Column;
                 listView1.Sorting = SortOrder.Ascending;
 
-                if (sortColumn != 0)
-                    listView1.Columns[sortColumn].Text = listview_columnTitle[sortColumn] + " ▲";
+                //if (sortColumn != 0)
+                for (int i = 0; i < listView1.Columns.Count; i++)
+                {
+                    if (i == sortColumn)
+                        listView1.Columns[i].Text = listview_columnTitle[i] + " ▲";
+                    else
+                        listView1.Columns[i].Text = listview_columnTitle[i];
+                }
             }
             else
             {
                 if (listView1.Sorting == SortOrder.Ascending)
                 {
                     listView1.Sorting = SortOrder.Descending;
-                    if (sortColumn != 0)
-                        listView1.Columns[sortColumn].Text = listview_columnTitle[sortColumn] + " ▼"; 
+                    //if (sortColumn != 0)
+                    for (int i = 0; i < listView1.Columns.Count; i++)
+                    {
+                        if (i == sortColumn)
+                            listView1.Columns[i].Text = listview_columnTitle[i] + " ▼"; 
+                        else
+                            listView1.Columns[i].Text = listview_columnTitle[i];
+                    }
                 }
                 else
                 {
                     listView1.Sorting = SortOrder.Ascending;
-                    if (sortColumn != 0)
-                        listView1.Columns[sortColumn].Text = listview_columnTitle[sortColumn] + " ▲";
+                    //if (sortColumn != 0)
+                    for (int i = 0; i < listView1.Columns.Count;i++)
+                    {
+                        if (i == sortColumn)
+                            listView1.Columns[i].Text = listview_columnTitle[i] + " ▲";
+                        else
+                            listView1.Columns[i].Text = listview_columnTitle[i];
+                    }
                 }
 
             }
             listView1.Sort();
-            this.listView1.ListViewItemSorter = new MyListViewComparer(e.Column, listView1.Sorting);
+            bool isDigit = false;
+            switch(sortColumn)
+            {
+                case 0:
+                    isDigit= true;
+                    break;
+                default:
+                    isDigit= false;
+                    break;
+            }
+
+            this.listView1.ListViewItemSorter = new MyListViewComparer(e.Column, listView1.Sorting, isDigit);
         }
 
         // 삭제 버튼
@@ -131,8 +167,7 @@ namespace TestProject
             printList();
         }
 
-        // 수정 버튼
-        private void button2_Click(object sender, EventArgs e)
+        private void editAccount()
         {
             newAccount EditAccount = new newAccount();
 
@@ -175,10 +210,10 @@ namespace TestProject
                             "', shopname = '" + EditAccount.shopname +
                             "', shopid = '" + EditAccount.shopid +
                             "', address = '" + EditAccount.address +
-                            "' where id="+ id;
-                      //  insertCommand.Parameters.AddWithValue("@name", EditAccount.name);
-                      //  insertCommand.Parameters.AddWithValue("@phone", EditAccount.phone);
-                      //  insertCommand.Parameters.AddWithValue("@cellphone", EditAccount.cellphone);
+                            "' where id=" + id;
+                        //  insertCommand.Parameters.AddWithValue("@name", EditAccount.name);
+                        //  insertCommand.Parameters.AddWithValue("@phone", EditAccount.phone);
+                        //  insertCommand.Parameters.AddWithValue("@cellphone", EditAccount.cellphone);
                         //insertCommand.Parameters.AddWithValue("@fax", EditAccount.fax);
                         //insertCommand.Parameters.AddWithValue("@shopname", EditAccount.shopname);
                         //insertCommand.Parameters.AddWithValue("@shopid", EditAccount.shopid);
@@ -195,6 +230,12 @@ namespace TestProject
                     conn.Close();
                 }
             }
+        }
+
+        // 수정 버튼
+        private void button2_Click(object sender, EventArgs e)
+        {
+            editAccount();
         }
 
         private void printList()
@@ -286,6 +327,11 @@ namespace TestProject
                 printList();
             }
         }
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            editAccount();
+        }
     }
 
 
@@ -293,22 +339,45 @@ namespace TestProject
     {
         private int col;
         private SortOrder order;
+        private bool isDigit;
         public MyListViewComparer()
         {
             col = 0;
             order = SortOrder.Ascending;
         }
-        public MyListViewComparer(int column, SortOrder order)
+        public MyListViewComparer(int column, SortOrder order, bool isDigit)
         {
             col = column;
             this.order = order;
+            this.isDigit = isDigit;
         }
         public int Compare(object x, object y)
         {
             int returnVal = -1;
-            returnVal = String.Compare(((ListViewItem)x).SubItems[col].Text,
-                                    ((ListViewItem)y).SubItems[col].Text);
-            // Determine whether the sort order is descending.
+            if (!isDigit)
+            {
+                returnVal = String.Compare(((ListViewItem)x).SubItems[col].Text,
+                                        ((ListViewItem)y).SubItems[col].Text);
+            }
+            else
+            {
+                double temp1;
+                double temp2;
+
+                bool result1 = Double.TryParse(((ListViewItem)x).SubItems[col].Text, out temp1);
+                bool result2 = Double.TryParse(((ListViewItem)y).SubItems[col].Text, out temp2);
+
+                if (result1 == false && result2 == false) returnVal = 0;
+                else if (result1 == false && result2 == true) returnVal = -1;
+                else if (result1 == true && result2 == false) returnVal = 1;
+                else
+                {
+                    if (temp1 ==temp2) returnVal = 0;
+                    if (temp1 < temp2) returnVal = -1;
+                    if (temp1 > temp2) returnVal = 1;
+                }
+            }
+                // Determine whether the sort order is descending.
             if (order == SortOrder.Descending)
                 // Invert the value returned by String.Compare.
                 returnVal *= -1;

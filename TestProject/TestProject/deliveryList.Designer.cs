@@ -65,6 +65,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(266, 29);
             this.textBox1.TabIndex = 0;
+            this.textBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
             // 
             // comboBox1
             // 
@@ -72,7 +73,8 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "거래처명",
-            "거래년월"});
+            "거래년월",
+            "구 분"});
             this.comboBox1.Location = new System.Drawing.Point(10, 11);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
@@ -90,6 +92,7 @@
             this.button4.TabStop = false;
             this.button4.Text = "검 색";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // panel3
             // 
@@ -166,6 +169,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Name = "deliveryList";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "deliveryList";
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();

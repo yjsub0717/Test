@@ -108,7 +108,9 @@ namespace TestProject
                     }
 
                     wb.Close(true);
+                    splash.Close();
                     excelApp.Quit();
+                    listView1.Focus();
                 }
                 finally
                 {

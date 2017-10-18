@@ -20,13 +20,16 @@ namespace TestProject
         public string date = null;
         public string bid_price = null;
         public string base_price = null;
+        public int select = 0;
 
+        bool estimate = true; // true : estimate, false : delivery
 
-        public estimate_list()
+        public estimate_list(bool estimate)
         {
             InitializeComponent();
             comboBox1.SelectedIndex = 0;
             printList();
+            this.estimate = estimate;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -82,13 +85,48 @@ namespace TestProject
             {
                 ListView.SelectedListViewItemCollection items = listView1.SelectedItems;
                 ListViewItem lvItem = items[0];
-                name = lvItem.SubItems[2].Text;
-                date = lvItem.SubItems[3].Text;
-                bid_price = lvItem.SubItems[4].Text;
-                base_price = lvItem.SubItems[5].Text;
+                if (estimate)
+                {
+                    name = lvItem.SubItems[2].Text;
+                    date = lvItem.SubItems[3].Text;
+                    bid_price = lvItem.SubItems[4].Text;
+                    base_price = lvItem.SubItems[5].Text;
 
-                this.DialogResult = DialogResult.OK;
+                    this.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    ds.Clear();
+                    using (MySqlConnection conn = new MySqlConnection(strConn))
+                    {
+                        string sql = "SELECT morning, launch, dinner FROM estimateList where account = '" + lvItem.SubItems[2].Text + "' AND date = '" + lvItem.SubItems[3].Text + "'";
+
+                        MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
+                        adpt.Fill(ds);
+                        conn.Close();
+                    }
+
+                    if(ds.Tables[0].Rows.Count == 1)
+                    {
+                        newDelivery newForm = new newDelivery(ds.Tables[0].Rows[0]["morning"].ToString() != "" , ds.Tables[0].Rows[0]["launch"].ToString() != "", ds.Tables[0].Rows[0]["dinner"].ToString() != "");
+
+                        if(newForm.ShowDialog() == DialogResult.OK)
+                        {
+                            name = lvItem.SubItems[2].Text;
+                            date = lvItem.SubItems[3].Text;
+                            this.select = newForm.select;
+                            this.DialogResult = DialogResult.OK;
+                        }
+                    }
+                    ds.Clear();
+                }
             }
+        }
+
+        private void textBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+                printList();
         }
     }
 }

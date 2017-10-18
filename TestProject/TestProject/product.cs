@@ -13,9 +13,13 @@ namespace TestProject
 {
     public partial class product : Form
     {
+        private int sortColumn = -1;
+
         String strConn = "Server=13.124.90.82; Port=3306; Database=rntp; Uid=root; Pwd=rntprntp;";
         DataSet ds = new DataSet();
         ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs> splash = null;
+
+        private String[] listview_columnTitle;
 
         public product()
         {
@@ -24,6 +28,13 @@ namespace TestProject
             this.TopLevel = false;
 
             comboBox1.SelectedIndex = 0;
+            listview_columnTitle = new String[listView1.Columns.Count];
+
+            for (int i = 0; i < listView1.Columns.Count; i++)
+            {
+                listview_columnTitle[i] = listView1.Columns[i].Text;
+            }
+
             //printList();
         }
 
@@ -179,8 +190,7 @@ namespace TestProject
             printList();
         }
 
-        // 수정 버튼
-        private void button2_Click(object sender, EventArgs e)
+        private void editProduct()
         {
             newProduct EditProduct = new newProduct();
 
@@ -216,15 +226,15 @@ namespace TestProject
                             "', standard = ' " + EditProduct.standard +
                             "', maker = '" + EditProduct.maker +
                             "', unit = '" + EditProduct.unit +
-                            "', kg = '" + EditProduct.kg +
-                            "', ea = '" + EditProduct.ea +
-                            "', school_price = '" + EditProduct.str_school_price +
-                            "', estimate_price = '" + EditProduct.str_estimate_price +
-                            "', rate_1 = '" + EditProduct.rate_1 +
-                            "', rate_2 = '" + EditProduct.rate_2 +
-                            "', original_price = '" + EditProduct.str_original_price +
-                            "', rate_original = '" + EditProduct.rate_original +
-                            "', account = '" + EditProduct.account +
+                            "', kg = " + EditProduct.kg +
+                            ", ea = " + EditProduct.ea +
+                            ", school_price = " + EditProduct.str_school_price +
+                            ", estimate_price = " + EditProduct.str_estimate_price +
+                            ", rate_1 = " + EditProduct.rate_1 +
+                            ", rate_2 = " + EditProduct.rate_2 +
+                            ", original_price = " + EditProduct.str_original_price +
+                            ", rate_original = " + EditProduct.rate_original +
+                            ", account = '" + EditProduct.account +
                             "', tax = '" + EditProduct.i_tax +
                             "' where id=" + id;
                         //  insertCommand.Parameters.AddWithValue("@name", EditProduct.name);
@@ -248,6 +258,13 @@ namespace TestProject
             }
         }
 
+
+        // 수정 버튼
+        private void button2_Click(object sender, EventArgs e)
+        {
+            editProduct();
+        }
+
         private void button5_Click(object sender, EventArgs e)
         {
             newProducts newForm = new newProducts();
@@ -256,6 +273,84 @@ namespace TestProject
             {
                 //printList();
             }
+        }
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            editProduct();
+        }
+
+        private void textBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+                printList();
+        }
+
+        private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (e.Column != sortColumn)
+            {
+                sortColumn = e.Column;
+                listView1.Sorting = SortOrder.Ascending;
+
+                //if (sortColumn != 0)
+                for (int i = 0; i < listView1.Columns.Count; i++)
+                {
+                    if (i == sortColumn)
+                        listView1.Columns[i].Text = listview_columnTitle[i] + " ▲";
+                    else
+                        listView1.Columns[i].Text = listview_columnTitle[i];
+                }
+            }
+            else
+            {
+                if (listView1.Sorting == SortOrder.Ascending)
+                {
+                    listView1.Sorting = SortOrder.Descending;
+                    //if (sortColumn != 0)
+                    for (int i = 0; i < listView1.Columns.Count; i++)
+                    {
+                        if (i == sortColumn)
+                            listView1.Columns[i].Text = listview_columnTitle[i] + " ▼";
+                        else
+                            listView1.Columns[i].Text = listview_columnTitle[i];
+                    }
+                }
+                else
+                {
+                    listView1.Sorting = SortOrder.Ascending;
+                    //if (sortColumn != 0)
+                    for (int i = 0; i < listView1.Columns.Count; i++)
+                    {
+                        if (i == sortColumn)
+                            listView1.Columns[i].Text = listview_columnTitle[i] + " ▲";
+                        else
+                            listView1.Columns[i].Text = listview_columnTitle[i];
+                    }
+                }
+
+            }
+            listView1.Sort();
+            bool isDigit = false;
+            switch (sortColumn)
+            {
+                case 0:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                    isDigit = true;
+                    break;
+                default:
+                    isDigit = false;
+                    break;
+            }
+
+            this.listView1.ListViewItemSorter = new MyListViewComparer(e.Column, listView1.Sorting, isDigit);
         }
 
 

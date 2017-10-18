@@ -1,6 +1,6 @@
 ﻿namespace TestProject
 {
-    partial class estimate_list
+    partial class indirect_list
     {
         /// <summary>
         /// Required designer variable.
@@ -38,8 +38,6 @@
             this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -55,7 +53,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(689, 48);
+            this.panel2.Size = new System.Drawing.Size(534, 48);
             this.panel2.TabIndex = 5;
             // 
             // textBox1
@@ -103,7 +101,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 49);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(689, 558);
+            this.panel3.Size = new System.Drawing.Size(534, 558);
             this.panel3.TabIndex = 6;
             // 
             // listView1
@@ -116,9 +114,7 @@
             this.columnHeader1,
             this.columnHeader19,
             this.columnHeader20,
-            this.columnHeader21,
-            this.columnHeader2,
-            this.columnHeader3});
+            this.columnHeader21});
             this.listView1.Font = new System.Drawing.Font("맑은 고딕", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.listView1.ForeColor = System.Drawing.SystemColors.WindowText;
             this.listView1.FullRowSelect = true;
@@ -127,12 +123,12 @@
             this.listView1.Margin = new System.Windows.Forms.Padding(0);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(689, 557);
+            this.listView1.Size = new System.Drawing.Size(534, 557);
             this.listView1.TabIndex = 3;
             this.listView1.TabStop = false;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.estimate_list_MouseDoubleClick);
+            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.indirect_list_MouseDoubleClick);
             // 
             // columnHeader1
             // 
@@ -148,7 +144,7 @@
             // 
             this.columnHeader20.Text = "거래처명";
             this.columnHeader20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader20.Width = 150;
+            this.columnHeader20.Width = 239;
             // 
             // columnHeader21
             // 
@@ -156,29 +152,17 @@
             this.columnHeader21.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader21.Width = 150;
             // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "견적가격";
-            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader2.Width = 150;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "기초가격";
-            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader3.Width = 150;
-            // 
-            // estimate_list
+            // indirect_list
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(689, 607);
+            this.ClientSize = new System.Drawing.Size(534, 607);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
-            this.Name = "estimate_list";
+            this.Name = "indirect_list";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "estimate_list";
-            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.estimate_list_MouseDoubleClick);
+            this.Text = "간접납품 목록";
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.indirect_list_MouseDoubleClick);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -198,7 +182,5 @@
         private System.Windows.Forms.ColumnHeader columnHeader19;
         private System.Windows.Forms.ColumnHeader columnHeader20;
         private System.Windows.Forms.ColumnHeader columnHeader21;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }

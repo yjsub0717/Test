@@ -51,6 +51,18 @@
     <Compile Include="Account.Designer.cs">
       <DependentUpon>Account.cs</DependentUpon>
     </Compile>
+    <Compile Include="alarm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="alarm.Designer.cs">
+      <DependentUpon>alarm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="checkDelivery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="checkDelivery.Designer.cs">
+      <DependentUpon>checkDelivery.cs</DependentUpon>
+    </Compile>
     <Compile Include="delivery.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +80,12 @@
     </Compile>
     <Compile Include="estimate.Designer.cs">
       <DependentUpon>estimate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="indirect_list.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="indirect_list.Designer.cs">
+      <DependentUpon>indirect_list.cs</DependentUpon>
     </Compile>
     <Compile Include="estimate_list.cs">
       <SubType>Form</SubType>
@@ -98,6 +116,12 @@
     </Compile>
     <Compile Include="newAccounts.Designer.cs">
       <DependentUpon>newAccounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="newDelivery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="newDelivery.Designer.cs">
+      <DependentUpon>newDelivery.cs</DependentUpon>
     </Compile>
     <Compile Include="newEstimate.cs">
       <SubType>Form</SubType>
@@ -131,6 +155,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="saleData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="saleData.Designer.cs">
+      <DependentUpon>saleData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="selectHeader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="selectHeader.Designer.cs">
+      <DependentUpon>selectHeader.cs</DependentUpon>
+    </Compile>
     <Compile Include="selectProduct.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +177,12 @@
     <EmbeddedResource Include="Account.resx">
       <DependentUpon>Account.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="alarm.resx">
+      <DependentUpon>alarm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="checkDelivery.resx">
+      <DependentUpon>checkDelivery.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="delivery.resx">
       <DependentUpon>delivery.cs</DependentUpon>
     </EmbeddedResource>
@@ -149,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="estimate.resx">
       <DependentUpon>estimate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="indirect_list.resx">
+      <DependentUpon>indirect_list.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="estimate_list.resx">
       <DependentUpon>estimate_list.cs</DependentUpon>
@@ -164,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="newAccounts.resx">
       <DependentUpon>newAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="newDelivery.resx">
+      <DependentUpon>newDelivery.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="newEstimate.resx">
       <DependentUpon>newEstimate.cs</DependentUpon>
@@ -190,6 +238,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="saleData.resx">
+      <DependentUpon>saleData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="selectHeader.resx">
+      <DependentUpon>selectHeader.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="selectProduct.resx">
       <DependentUpon>selectProduct.cs</DependentUpon>
     </EmbeddedResource>

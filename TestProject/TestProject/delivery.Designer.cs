@@ -43,6 +43,38 @@
             this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader33 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader34 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -150,13 +182,45 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.BackColor = System.Drawing.SystemColors.Window;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2,
             this.columnHeader15,
             this.columnHeader7,
             this.columnHeader14,
             this.columnHeader16,
             this.columnHeader17,
             this.columnHeader6,
-            this.columnHeader1});
+            this.columnHeader1,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader11,
+            this.columnHeader12,
+            this.columnHeader13,
+            this.columnHeader18,
+            this.columnHeader19,
+            this.columnHeader20,
+            this.columnHeader21,
+            this.columnHeader22,
+            this.columnHeader23,
+            this.columnHeader24,
+            this.columnHeader25,
+            this.columnHeader26,
+            this.columnHeader27,
+            this.columnHeader28,
+            this.columnHeader29,
+            this.columnHeader30,
+            this.columnHeader31,
+            this.columnHeader32,
+            this.columnHeader33,
+            this.columnHeader34,
+            this.columnHeader35,
+            this.columnHeader36,
+            this.columnHeader37,
+            this.columnHeader38,
+            this.columnHeader40});
             this.listView1.Font = new System.Drawing.Font("맑은 고딕", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.listView1.ForeColor = System.Drawing.SystemColors.WindowText;
             this.listView1.FullRowSelect = true;
@@ -213,6 +277,197 @@
             this.columnHeader1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader1.Width = 100;
             // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "";
+            this.columnHeader2.Width = 0;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "1";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader3.Width = 50;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "2";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader4.Width = 50;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "3";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader5.Width = 50;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "4";
+            this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader8.Width = 50;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "5";
+            this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader9.Width = 50;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "6";
+            this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader10.Width = 50;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "7";
+            this.columnHeader11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader11.Width = 50;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "8";
+            this.columnHeader12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader12.Width = 50;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "9";
+            this.columnHeader13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader13.Width = 50;
+            // 
+            // columnHeader18
+            // 
+            this.columnHeader18.Text = "10";
+            this.columnHeader18.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader18.Width = 50;
+            // 
+            // columnHeader19
+            // 
+            this.columnHeader19.Text = "11";
+            this.columnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader19.Width = 50;
+            // 
+            // columnHeader20
+            // 
+            this.columnHeader20.Text = "12";
+            this.columnHeader20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader20.Width = 50;
+            // 
+            // columnHeader21
+            // 
+            this.columnHeader21.Text = "13";
+            this.columnHeader21.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader21.Width = 50;
+            // 
+            // columnHeader22
+            // 
+            this.columnHeader22.Text = "14";
+            this.columnHeader22.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader22.Width = 50;
+            // 
+            // columnHeader23
+            // 
+            this.columnHeader23.Text = "15";
+            this.columnHeader23.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader23.Width = 50;
+            // 
+            // columnHeader24
+            // 
+            this.columnHeader24.Text = "16";
+            this.columnHeader24.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader24.Width = 50;
+            // 
+            // columnHeader25
+            // 
+            this.columnHeader25.Text = "17";
+            this.columnHeader25.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader25.Width = 50;
+            // 
+            // columnHeader26
+            // 
+            this.columnHeader26.Text = "18";
+            this.columnHeader26.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader26.Width = 50;
+            // 
+            // columnHeader27
+            // 
+            this.columnHeader27.Text = "19";
+            this.columnHeader27.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader27.Width = 50;
+            // 
+            // columnHeader28
+            // 
+            this.columnHeader28.Text = "20";
+            this.columnHeader28.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader28.Width = 50;
+            // 
+            // columnHeader29
+            // 
+            this.columnHeader29.Text = "21";
+            this.columnHeader29.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader29.Width = 50;
+            // 
+            // columnHeader30
+            // 
+            this.columnHeader30.Text = "22";
+            this.columnHeader30.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader30.Width = 50;
+            // 
+            // columnHeader31
+            // 
+            this.columnHeader31.Text = "23";
+            this.columnHeader31.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader31.Width = 50;
+            // 
+            // columnHeader32
+            // 
+            this.columnHeader32.Text = "24";
+            this.columnHeader32.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader32.Width = 50;
+            // 
+            // columnHeader33
+            // 
+            this.columnHeader33.Text = "25";
+            this.columnHeader33.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader33.Width = 50;
+            // 
+            // columnHeader34
+            // 
+            this.columnHeader34.Text = "26";
+            this.columnHeader34.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader34.Width = 50;
+            // 
+            // columnHeader35
+            // 
+            this.columnHeader35.Text = "27";
+            this.columnHeader35.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader35.Width = 50;
+            // 
+            // columnHeader36
+            // 
+            this.columnHeader36.Text = "28";
+            this.columnHeader36.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader36.Width = 50;
+            // 
+            // columnHeader37
+            // 
+            this.columnHeader37.Text = "29";
+            this.columnHeader37.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader37.Width = 50;
+            // 
+            // columnHeader38
+            // 
+            this.columnHeader38.Text = "30";
+            this.columnHeader38.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader38.Width = 50;
+            // 
+            // columnHeader40
+            // 
+            this.columnHeader40.Text = "31";
+            this.columnHeader40.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader40.Width = 50;
+            // 
             // delivery
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -247,5 +502,37 @@
         private System.Windows.Forms.ColumnHeader columnHeader17;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.ColumnHeader columnHeader18;
+        private System.Windows.Forms.ColumnHeader columnHeader19;
+        private System.Windows.Forms.ColumnHeader columnHeader20;
+        private System.Windows.Forms.ColumnHeader columnHeader21;
+        private System.Windows.Forms.ColumnHeader columnHeader22;
+        private System.Windows.Forms.ColumnHeader columnHeader23;
+        private System.Windows.Forms.ColumnHeader columnHeader24;
+        private System.Windows.Forms.ColumnHeader columnHeader25;
+        private System.Windows.Forms.ColumnHeader columnHeader26;
+        private System.Windows.Forms.ColumnHeader columnHeader27;
+        private System.Windows.Forms.ColumnHeader columnHeader28;
+        private System.Windows.Forms.ColumnHeader columnHeader29;
+        private System.Windows.Forms.ColumnHeader columnHeader30;
+        private System.Windows.Forms.ColumnHeader columnHeader31;
+        private System.Windows.Forms.ColumnHeader columnHeader32;
+        private System.Windows.Forms.ColumnHeader columnHeader33;
+        private System.Windows.Forms.ColumnHeader columnHeader34;
+        private System.Windows.Forms.ColumnHeader columnHeader35;
+        private System.Windows.Forms.ColumnHeader columnHeader36;
+        private System.Windows.Forms.ColumnHeader columnHeader37;
+        private System.Windows.Forms.ColumnHeader columnHeader38;
+        private System.Windows.Forms.ColumnHeader columnHeader40;
     }
 }

@@ -150,6 +150,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(266, 29);
             this.textBox1.TabIndex = 3;
+            this.textBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
             // 
             // comboBox1
             // 
@@ -192,6 +193,7 @@
             // 
             // listView1
             // 
+            this.listView1.AllowColumnReorder = true;
             this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -224,10 +226,12 @@
             this.listView1.TabStop = false;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
+            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "";
+            this.columnHeader1.Text = "No";
             this.columnHeader1.Width = 70;
             // 
             // columnHeader2

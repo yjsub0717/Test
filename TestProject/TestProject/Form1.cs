@@ -148,5 +148,18 @@ namespace TestProject
             tabControl1.TabPages.Add(newPage);
             tabControl1.SelectedTab = newPage;
         }
+
+        private void 매출자료ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TabPage newPage = new TabPage("매출자료 관리    ");
+            saleData newsaleData = new saleData();
+            newsaleData.Size = newPage.Size;
+            newsaleData.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+
+            newPage.Controls.Add(newsaleData);
+            newPage.Controls[0].Show();
+            tabControl1.TabPages.Add(newPage);
+            tabControl1.SelectedTab = newPage;
+        }
     }
 }

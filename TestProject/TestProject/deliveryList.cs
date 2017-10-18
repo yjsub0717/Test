@@ -18,7 +18,7 @@ namespace TestProject
 
         public string name = null;
         public string date = null;
-        public Boolean launch = true;
+        public int launch = 0;
 
         public deliveryList()
         {
@@ -47,6 +47,14 @@ namespace TestProject
                         case 1:
                             sql = "SELECT * FROM `deliveryList` WHERE `date` LIKE '%" + textBox1.Text + "%'";
                             break;
+                        case 2:
+                            if(textBox1.Text.IndexOf("조") != -1)
+                                sql = "SELECT * FROM `deliveryList` WHERE select = 0";
+                            if(textBox1.Text.IndexOf("중") != -1)
+                                sql = "SELECT * FROM `deliveryList` WHERE select = 1";
+                            if(textBox1.Text.IndexOf("석") != -1)
+                                sql = "SELECT * FROM `deliveryList` WHERE select = 2";
+                            break;
                         default:
                             break;
                     }
@@ -59,11 +67,30 @@ namespace TestProject
             listView1.Items.Clear();
             foreach (DataRow row in ds.Tables[0].Rows)
             {
-                listView1.Items.Add(new ListViewItem(new string[] {"", row["id"].ToString(), 
-                    row["account"].ToString(), 
-                    row["date"].ToString(),
-                    row["launch"].Equals(true) ? "중식" : "석식" }));
+                switch((int)row["classification"])
+                {
+                    case 0:
+                        listView1.Items.Add(new ListViewItem(new string[] {"", row["id"].ToString(), 
+                        row["account"].ToString(), 
+                        row["date"].ToString(),
+                        "조 식" }));
+                        break;
+                    case 1:
+                        listView1.Items.Add(new ListViewItem(new string[] {"", row["id"].ToString(), 
+                        row["account"].ToString(), 
+                        row["date"].ToString(),
+                        "중 식" }));
+                        break;
+                    case 2:
+                        listView1.Items.Add(new ListViewItem(new string[] {"", row["id"].ToString(), 
+                        row["account"].ToString(), 
+                        row["date"].ToString(),
+                        "석 식" }));
+                        break;
+                    default:
+                        break;
 
+                }
             }
             ds.Clear();
         }
@@ -76,10 +103,26 @@ namespace TestProject
                 ListViewItem lvItem = items[0];
                 name = lvItem.SubItems[2].Text;
                 date = lvItem.SubItems[3].Text;
-                launch = lvItem.SubItems[4].Text.Equals("중식");
+                if (lvItem.SubItems[4].Text.Equals("조 식"))
+                    launch = 0;
+                if (lvItem.SubItems[4].Text.Equals("중 식"))
+                    launch = 1;
+                if (lvItem.SubItems[4].Text.Equals("석 식"))
+                    launch = 2;
 
                 this.DialogResult = DialogResult.OK;
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            printList();
+        }
+
+        private void textBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+                printList();
         }
     }
 }

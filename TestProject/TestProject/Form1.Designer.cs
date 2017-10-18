@@ -33,8 +33,9 @@
             this.품목관리ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.견적서등록ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.납품지시서ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.간접납품ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.매출자료ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +48,8 @@
             this.품목관리ToolStripMenuItem,
             this.견적서등록ToolStripMenuItem,
             this.납품지시서ToolStripMenuItem,
-            this.간접납품ToolStripMenuItem});
+            this.간접납품ToolStripMenuItem,
+            this.매출자료ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
@@ -83,6 +85,13 @@
             this.납품지시서ToolStripMenuItem.Text = "납품지시서";
             this.납품지시서ToolStripMenuItem.Click += new System.EventHandler(this.납품지시서ToolStripMenuItem_Click);
             // 
+            // 간접납품ToolStripMenuItem
+            // 
+            this.간접납품ToolStripMenuItem.Name = "간접납품ToolStripMenuItem";
+            this.간접납품ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.간접납품ToolStripMenuItem.Text = "간접납품";
+            this.간접납품ToolStripMenuItem.Click += new System.EventHandler(this.간접납품ToolStripMenuItem_Click);
+            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -98,12 +107,12 @@
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabcontrol1_DrawItem);
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_MouseClick);
             // 
-            // 간접납품ToolStripMenuItem
+            // 매출자료ToolStripMenuItem
             // 
-            this.간접납품ToolStripMenuItem.Name = "간접납품ToolStripMenuItem";
-            this.간접납품ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.간접납품ToolStripMenuItem.Text = "간접납품";
-            this.간접납품ToolStripMenuItem.Click += new System.EventHandler(this.간접납품ToolStripMenuItem_Click);
+            this.매출자료ToolStripMenuItem.Name = "매출자료ToolStripMenuItem";
+            this.매출자료ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.매출자료ToolStripMenuItem.Text = "매출자료";
+            this.매출자료ToolStripMenuItem.Click += new System.EventHandler(this.매출자료ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -134,6 +143,7 @@
         private System.Windows.Forms.ToolStripMenuItem 납품지시서ToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.ToolStripMenuItem 간접납품ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 매출자료ToolStripMenuItem;
     }
 }
 
