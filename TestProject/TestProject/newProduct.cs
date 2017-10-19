@@ -48,7 +48,7 @@ namespace TestProject
             float discountRate2 = 0;
             try
             {
-                if (Int32.TryParse(textBox8.Text, out school_price))
+                if (Int32.TryParse(textBox8.Text.Replace(",", ""), out school_price))
                 {
                     if (float.TryParse(textBox10.Text, out discountRate))
                     {
@@ -56,7 +56,7 @@ namespace TestProject
                         {
                             price = (int)((school_price * ((100 - discountRate) / 100.0)) * ((100 - discountRate2) / 100.0));
 
-                            textBox7.Text = price.ToString();
+                            textBox7.Text = textTrans(price.ToString());
                         }
                     }
                 }
@@ -71,13 +71,13 @@ namespace TestProject
             float discountRate = 0;
             try
             {
-                if (Int32.TryParse(textBox8.Text, out school_price))
+                if (Int32.TryParse(textBox8.Text.Replace(",", ""), out school_price))
                 {
                     if (float.TryParse(textBox12.Text, out discountRate))
                     {
                         origin_price = (int)(school_price * ((100 - discountRate) / 100.0));
 
-                        textBox11.Text = origin_price.ToString();
+                        textBox11.Text = textTrans(origin_price.ToString());
                     }
                 }
             }
@@ -208,6 +208,23 @@ namespace TestProject
             }
         }
 
+        private string textTrans(string str)
+        {
+            string result = "";
+
+            if (str != "")
+            {
+                result = str.Replace(",", "");//숫자변환시 콤마로 발생하는 에러 방지
+                result = String.Format("{0:#,###}", Convert.ToInt32(result));
+            }
+
+            return result;
+        }
+
+        private void textBox8_Leave(object sender, EventArgs e)
+        {
+            textBox8.Text = textTrans(textBox8.Text);
+        }
 
     }
 }

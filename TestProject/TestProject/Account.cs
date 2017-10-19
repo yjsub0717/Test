@@ -86,6 +86,10 @@ namespace TestProject
         // 정렬
         private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
         {
+            if (listView1.Items.Count < 2) return;
+            splash = new ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs>(x => x.ProgressChanged);
+            splash.Show();
+            nowLoading.ProgressChangedEventArgs p = new nowLoading.ProgressChangedEventArgs();
             if (e.Column != sortColumn)
             {
                 sortColumn = e.Column;
@@ -128,6 +132,7 @@ namespace TestProject
                 }
 
             }
+
             listView1.Sort();
             bool isDigit = false;
             switch(sortColumn)
@@ -141,6 +146,9 @@ namespace TestProject
             }
 
             this.listView1.ListViewItemSorter = new MyListViewComparer(e.Column, listView1.Sorting, isDigit);
+
+            splash.Close();
+
         }
 
         // 삭제 버튼
@@ -340,6 +348,8 @@ namespace TestProject
         private int col;
         private SortOrder order;
         private bool isDigit;
+        int test = 0;
+
         public MyListViewComparer()
         {
             col = 0;
@@ -350,9 +360,11 @@ namespace TestProject
             col = column;
             this.order = order;
             this.isDigit = isDigit;
+            test = 0;
         }
         public int Compare(object x, object y)
         {
+            //Console.WriteLine(test++);
             int returnVal = -1;
             if (!isDigit)
             {
@@ -364,12 +376,12 @@ namespace TestProject
                 double temp1;
                 double temp2;
 
-                bool result1 = Double.TryParse(((ListViewItem)x).SubItems[col].Text, out temp1);
-                bool result2 = Double.TryParse(((ListViewItem)y).SubItems[col].Text, out temp2);
+                bool result1 = Double.TryParse(((ListViewItem)x).SubItems[col].Text.Replace(",", ""), out temp1);
+                bool result2 = Double.TryParse(((ListViewItem)y).SubItems[col].Text.Replace(",", ""), out temp2);
 
                 if (result1 == false && result2 == false) returnVal = 0;
-                else if (result1 == false && result2 == true) returnVal = -1;
-                else if (result1 == true && result2 == false) returnVal = 1;
+                else if (result1 == false && result2 == true) returnVal = -1; // 빈칸을 뒤로 보내려면 이부분 반대로
+                else if (result1 == true && result2 == false) returnVal = 1;// 빈칸을 뒤로 보내려면 이부분 반대로
                 else
                 {
                     if (temp1 ==temp2) returnVal = 0;

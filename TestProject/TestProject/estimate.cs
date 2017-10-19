@@ -19,6 +19,8 @@ namespace TestProject
         Excel.Application excelApp = null;
         Excel.Workbook wb = null;
         Excel.Worksheet ws = null;
+        private int sortColumn = -1;
+        private String[] listview_columnTitle;
 
         ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs> splash = null;
         ListViewItem.ListViewSubItem SelectedLSI;
@@ -32,7 +34,14 @@ namespace TestProject
         public estimate()
         {
             InitializeComponent();
-            this.TopLevel = false; 
+            this.TopLevel = false;
+            listview_columnTitle = new String[listView1.Columns.Count];
+
+            for (int i = 0; i < listView1.Columns.Count; i++)
+            {
+                listview_columnTitle[i] = listView1.Columns[i].Text;
+            }
+
         }
 
         private static void ReleaseExcelObject(object obj)
@@ -544,7 +553,7 @@ namespace TestProject
                                 row["name_excel"].ToString(),
                                 row["standard_excel"].ToString(),
                                 row["unit_excel"].ToString(),
-                                row["total_excel"].ToString(),
+                                textTrans(row["total_excel"].ToString()),
                                 row["text_excel"].ToString() }));
                         }
                         else
@@ -564,7 +573,7 @@ namespace TestProject
                                 row["name_excel"].ToString(),
                                 row["standard_excel"].ToString(),
                                 row["unit_excel"].ToString(),
-                                row["total_excel"].ToString(),
+                                textTrans(row["total_excel"].ToString()),
                                 row["text_excel"].ToString() }));
                         }
                     }
@@ -890,6 +899,80 @@ namespace TestProject
                     //}
                 }
             }
+        }
+
+        private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (listView1.Items.Count < 2) return;
+            splash = new ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs>(x => x.ProgressChanged);
+            splash.Show();
+            nowLoading.ProgressChangedEventArgs p = new nowLoading.ProgressChangedEventArgs();
+
+            if (e.Column != sortColumn)
+            {
+                sortColumn = e.Column;
+                listView1.Sorting = SortOrder.Ascending;
+
+                //if (sortColumn != 0)
+                for (int i = 0; i < listView1.Columns.Count; i++)
+                {
+                    if (i == sortColumn)
+                        listView1.Columns[i].Text = listview_columnTitle[i] + " ▲";
+                    else
+                        listView1.Columns[i].Text = listview_columnTitle[i];
+                }
+            }
+            else
+            {
+                if (listView1.Sorting == SortOrder.Ascending)
+                {
+                    listView1.Sorting = SortOrder.Descending;
+                    //if (sortColumn != 0)
+                    for (int i = 0; i < listView1.Columns.Count; i++)
+                    {
+                        if (i == sortColumn)
+                            listView1.Columns[i].Text = listview_columnTitle[i] + " ▼";
+                        else
+                            listView1.Columns[i].Text = listview_columnTitle[i];
+                    }
+                }
+                else
+                {
+                    listView1.Sorting = SortOrder.Ascending;
+                    //if (sortColumn != 0)
+                    for (int i = 0; i < listView1.Columns.Count; i++)
+                    {
+                        if (i == sortColumn)
+                            listView1.Columns[i].Text = listview_columnTitle[i] + " ▲";
+                        else
+                            listView1.Columns[i].Text = listview_columnTitle[i];
+                    }
+                }
+
+            }
+
+            listView1.Sort();
+            bool isDigit = false;
+            switch (sortColumn)
+            {
+                case 0:
+                case 1:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 14:
+                    isDigit = true;
+                    break;
+                default:
+                    isDigit = false;
+                    break;
+            }
+
+            this.listView1.ListViewItemSorter = new MyListViewComparer(e.Column, listView1.Sorting, isDigit);
+
+            splash.Close();
         }
     }
 }

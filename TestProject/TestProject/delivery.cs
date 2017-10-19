@@ -18,6 +18,8 @@ namespace TestProject
         Excel.Application excelApp = null;
         Excel.Workbook wb = null;
         Excel.Worksheet ws = null;
+        private int sortColumn = -1;
+        private String[] listview_columnTitle;
 
         String strConn = "Server=13.124.90.82; Port=3306; Database=rntp; Uid=root; Pwd=rntprntp;";
         DataSet ds = new DataSet();
@@ -32,10 +34,12 @@ namespace TestProject
         {
             InitializeComponent();
             this.TopLevel = false;
-            //for (int c = 1; c <= 31; c++)
-            //{
-            //    listView1.Columns.Add(c.ToString(), 50, HorizontalAlignment.Center);
-            //}
+            listview_columnTitle = new String[listView1.Columns.Count];
+
+            for (int i = 0; i < listView1.Columns.Count; i++)
+            {
+                listview_columnTitle[i] = listView1.Columns[i].Text;
+            }
         }
 
         private string textTrans(string str)
@@ -557,8 +561,8 @@ namespace TestProject
                                 tempDs.Tables[0].Rows[0]["maker"].ToString(),
                                 tempDs.Tables[0].Rows[0]["standard"].ToString(),
                                 tempDs.Tables[0].Rows[0]["unit"].ToString(),
-                                row["total_estimate"].ToString(),
-                                row["total_excel"].ToString(),
+                                textTrans(row["total_estimate"].ToString()),
+                                textTrans(row["total_excel"].ToString()),
                                 row["day1"].ToString(),
                                 row["day2"].ToString(),
                                 row["day3"].ToString(),
@@ -600,8 +604,8 @@ namespace TestProject
                                 "",
                                 "",
                                 "",
-                                row["total_estimate"].ToString(),
-                                row["total_excel"].ToString(),
+                                textTrans(row["total_estimate"].ToString()),
+                                textTrans(row["total_excel"].ToString()),
                                 row["day1"].ToString(),
                                 row["day2"].ToString(),
                                 row["day3"].ToString(),
@@ -640,6 +644,77 @@ namespace TestProject
                     splash.Close();
                 }
             }
+        }
+
+        private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (listView1.Items.Count < 2) return;
+            //if (e.Column > 7) return;
+            splash = new ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs>(x => x.ProgressChanged);
+            splash.Show();
+            nowLoading.ProgressChangedEventArgs p = new nowLoading.ProgressChangedEventArgs();
+
+            if (e.Column != sortColumn)
+            {
+                sortColumn = e.Column;
+                listView1.Sorting = SortOrder.Ascending;
+
+                //if (sortColumn != 0)
+                for (int i = 0; i < listView1.Columns.Count; i++)
+                {
+                    if (i == sortColumn)
+                        listView1.Columns[i].Text = listview_columnTitle[i] + " ▲";
+                    else
+                        listView1.Columns[i].Text = listview_columnTitle[i];
+                }
+            }
+            else
+            {
+                if (listView1.Sorting == SortOrder.Ascending)
+                {
+                    listView1.Sorting = SortOrder.Descending;
+                    //if (sortColumn != 0)
+                    for (int i = 0; i < listView1.Columns.Count; i++)
+                    {
+                        if (i == sortColumn)
+                            listView1.Columns[i].Text = listview_columnTitle[i] + " ▼";
+                        else
+                            listView1.Columns[i].Text = listview_columnTitle[i];
+                    }
+                }
+                else
+                {
+                    listView1.Sorting = SortOrder.Ascending;
+                    //if (sortColumn != 0)
+                    for (int i = 0; i < listView1.Columns.Count; i++)
+                    {
+                        if (i == sortColumn)
+                            listView1.Columns[i].Text = listview_columnTitle[i] + " ▲";
+                        else
+                            listView1.Columns[i].Text = listview_columnTitle[i];
+                    }
+                }
+
+            }
+
+            listView1.Sort();
+            bool isDigit = false;
+            switch (sortColumn)
+            {
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    isDigit = false;
+                    break;
+                default:
+                    isDigit = true;
+                    break;
+            }
+
+            this.listView1.ListViewItemSorter = new MyListViewComparer(e.Column, listView1.Sorting, isDigit);
+
+            splash.Close();
         }
 
 

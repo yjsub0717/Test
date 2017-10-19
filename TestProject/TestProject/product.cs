@@ -288,6 +288,11 @@ namespace TestProject
 
         private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
         {
+            if (listView1.Items.Count < 2) return;
+            splash = new ThreadedSplashFormController<nowLoading, nowLoading.ProgressChangedEventArgs>(x => x.ProgressChanged);
+            splash.Show();
+            nowLoading.ProgressChangedEventArgs p = new nowLoading.ProgressChangedEventArgs();
+
             if (e.Column != sortColumn)
             {
                 sortColumn = e.Column;
@@ -330,6 +335,7 @@ namespace TestProject
                 }
 
             }
+
             listView1.Sort();
             bool isDigit = false;
             switch (sortColumn)
@@ -351,9 +357,23 @@ namespace TestProject
             }
 
             this.listView1.ListViewItemSorter = new MyListViewComparer(e.Column, listView1.Sorting, isDigit);
+
+            splash.Close();
         }
 
 
+        private string textTrans(string str)
+        {
+            string result = "";
+
+            if (str != "")
+            {
+                result = str.Replace(",", "");//숫자변환시 콤마로 발생하는 에러 방지
+                result = String.Format("{0:#,###}", Convert.ToInt32(result));
+            }
+
+            return result;
+        }
 
     }
 }
